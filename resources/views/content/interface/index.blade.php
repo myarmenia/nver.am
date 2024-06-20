@@ -63,6 +63,26 @@
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
                 <h1 class="mb-4">Fresh fruits shop</h1>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                    <p>У вас есть 18 лет? </p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" id="year-btn-yes" class="btn btn-success" data-dismiss="modal">Да</button>
+                    <button type="button" id="year-btn-no" class="btn btn-danger" data-dismiss="modal">Нет</button>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+  
+
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -97,7 +117,7 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <h4>Категории</h4>
-                                            <ul class="list-unstyled fruite-categorie">
+                                            <ul class="list-unstyled categorie-list">
                                                 @foreach ($categories as $category)
                                                 <li>
                                                     <button type="submit" class="category-button" name='category' value='{{ $category->id }}'>{{ $category->name }}</button>

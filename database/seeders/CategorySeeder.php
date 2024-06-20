@@ -21,7 +21,7 @@ class CategorySeeder extends Seeder
             ['name' => 'Для детей'],
             ['name' => 'Для дому'],
             ['name' => 'Техника'],
-            ['name' => '+18'],
+            ['name' => '18+'],
             ['name' => 'Другое'],
             ['name' => 'Витамины'],
             ['name' => 'Продукты'],

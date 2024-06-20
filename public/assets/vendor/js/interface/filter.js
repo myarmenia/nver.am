@@ -1,5 +1,5 @@
   $(function () {
-
+ 
     // Filter
   
     function filter(data) {
@@ -70,6 +70,12 @@
     
     $('.category-button').on('click', function(){
       let category = $(this).val();
+      if($(this).text() == "18+"){
+        if(sessionStorage.getItem('year') === null){
+          $("#myModal").modal('show');
+          return;
+        }
+      }
       $('#select-submit').val('');
       $('#title-search').val('');
       $('#procent-submit').val(0);
@@ -95,6 +101,52 @@
       $('.category-button').removeClass('active');
       filter({'procent': procent})
     });
+
+    //modal
+
+    $("#myBtn").on('click', function(){
+      $("#myModal").modal('show');
+    });
+
+    $('#year-btn-yes').on('click', function(){
+      sessionStorage.setItem('year', true);
+
+      $('#select-submit').val('');
+      $('#title-search').val('');
+      $('#procent-submit').val(0);
+      $('#procent').text(0);
+      $('.category-button').removeClass('active');
+      $(this).addClass('active');
+      filter({'category': $(this).val()})
+      $("#myModal").modal('hide');
+
+    });
+
+    $('#year-btn-no').on('click', function(){
+      sessionStorage.setItem('year', false);
+      // $(this).prop('disabled', true);
+      $('.categorie-list li').each(function() {
+        if ($(this).find('button').text() === '18+') {
+          $(this).find('button').prop('disabled', true);
+        }
+      });
+   
+      $("#myModal").modal('hide');
+
+    });
+
+
+    //check 18+ confirm
+
+    if(sessionStorage.getItem('year') !== null && sessionStorage.getItem('year') == 'false'){
+      $('.categorie-list li').each(function() {
+        if ($(this).find('button').text() === '18+') {
+          $(this).find('button').prop('disabled', true);
+        }
+      });
+    }
+   
+
   
     // function removeFilter(indelible) {
     //   let filters = {
@@ -114,24 +166,5 @@
     //   // $('#procent').text(0);
     //   // $('.category-button').removeClass('active');
     // }
-  
-    
-  //   $('#title-search-submit').on('click', function() {
-        
-  //     // const dataToSend = { key: 'value' }; // Данные, которые вы хотите отправить
-  
-  //     // $.ajax({
-  //     //     url: 'your-server-endpoint', // Замените на нужный URL
-  //     //     type: 'POST',
-  //     //     contentType: 'application/json',
-  //     //     data: JSON.stringify(dataToSend),
-  //     //     success: function(response) {
-  //     //         console.log('Success:', response);
-  //     //     },
-  //     //     error: function(error) {
-  //     //         console.error('Error:', error);
-  //     //     }
-  //     // });
-  // });
-    
+ 
   });
