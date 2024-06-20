@@ -1,0 +1,97 @@
+$(function () {
+
+  // Filter
+
+  function filter(data) {
+
+    $.ajax({
+      type: "POST",
+      url: '/interface/search-filter',
+      data: {
+        data: data,
+      },
+      cache: false,
+      success: function (data) {
+        let html = '';
+     
+        data.map(element => {
+          const imageUrl = element.images[0].path;
+          const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
+      
+          html += `
+              <div class="col-md-6 col-lg-6 col-xl-4">
+                  <div class="rounded position-relative fruite-item border border-secondary rounded-bottom">
+                      <div class="fruite-img">
+                          <a href="/interface/shop-details/${element.id}" target="_blank">
+                              <img src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="">
+                          </a>
+                      </div>
+                      <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                          ${element.category.name}
+                      </div>
+                      <div class="p-4">
+                          <h4>${productDetails.title || ''}</h4>
+                          <p>Кешбек: ${productDetails.cashback || 0}%</p>
+                          <p>Согласовать выкуп с: 
+                              <a href="https://t.me/${productDetails.owner || ''}" target="_blank">
+                                  ${productDetails.owner || ''}
+                              </a>
+                          </p>
+                          <div class="d-flex justify-content-between flex-lg-wrap">
+                              <p class="text-dark fs-5 fw-bold mb-0">
+                                  ${productDetails.price_in_store || 0} руб.
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          `;
+      });
+      
+        $('#product-start').html(html);
+       
+      }
+    });
+  }
+
+  //add button submit
+  $('#title-search-submit').on('click', function(){
+    let textInput = $('#title-search').val();
+    filter({'title': textInput})
+  });
+  
+  $('.category-button').on('click', function(){
+    let category = $(this).val();
+    filter({'category': category})
+  });
+
+  $('#select-submit').on('change', function(){
+    let sorting = $(this).val();
+    filter({'sorting': sorting})
+  });
+
+  $('#procent-submit').on('change', function(){
+    let procent = $(this).val();
+    filter({'procent': procent})
+  });
+
+  
+//   $('#title-search-submit').on('click', function() {
+      
+//     // const dataToSend = { key: 'value' }; // Данные, которые вы хотите отправить
+
+//     // $.ajax({
+//     //     url: 'your-server-endpoint', // Замените на нужный URL
+//     //     type: 'POST',
+//     //     contentType: 'application/json',
+//     //     data: JSON.stringify(dataToSend),
+//     //     success: function(response) {
+//     //         console.log('Success:', response);
+//     //     },
+//     //     error: function(error) {
+//     //         console.error('Error:', error);
+//     //     }
+//     // });
+// });
+  
+});

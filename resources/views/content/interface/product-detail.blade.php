@@ -87,7 +87,7 @@
                                 <p class="mb-3">Категория: {{$product->category->name }}</p>
                                 <h5 class="fw-bold mb-3">Цена: {{ json_decode($product->product_details)->price_in_store }}руб.</h5>
                                 <h5 class="fw-bold mb-3">Кешбек: {{ json_decode($product->product_details)->cashback }}%</h5>
-                                <h5 class="fw-bold mb-3">Связь: <a href="https://t.me/{{ json_decode($product->product_details)->owner }}" target="_blank">{{ json_decode($product->product_details)->owner }}</a></h5>
+                                <h5 class="fw-bold mb-3">Согласовать выкуп с: <a href="https://t.me/{{ json_decode($product->product_details)->owner }}" target="_blank">{{ json_decode($product->product_details)->owner }}</a></h5>
                             </div>
                         </div>
                     </div>

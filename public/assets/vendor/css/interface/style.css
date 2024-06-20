@@ -496,3 +496,23 @@
     line-height: 35px;
 }
 /*** Footer End ***/
+
+/*** Category Start ***/
+
+.category-button {
+    border: none; 
+    outline: none; 
+    background-color: inherit;
+    color: #8bc34a;
+}
+
+.category-button:hover {
+    background-color: #8bc34a; 
+    color: white;
+}
+
+.category-button:active {
+    background-color: #7cb342;
+    border-color: #7cb342; 
+}
+/*** Category End ***/

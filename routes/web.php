@@ -132,6 +132,7 @@ Route::group(['prefix' => 'categories'], function () {
 Route::group(['prefix' => 'interface'], function () {
     Route::get('/', [InterfaceController::class, 'index'])->name('get-interface');
     Route::get('/shop-details/{id}', [InterfaceController::class, 'detail'])->name('get-details');
+    Route::post('/search-filter', [InterfaceController::class, 'filterSearch'])->name('search-title');
 });
 
 
