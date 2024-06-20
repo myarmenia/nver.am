@@ -66,9 +66,9 @@ Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-e
 Route::get('/pages/misc-under-maintenance', [MiscUnderMaintenance::class, 'index'])->name('pages-misc-under-maintenance');
 
 // authentication
-Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
-Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
-Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
+// Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
+// Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
+// Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
 
 // cards
 Route::get('/cards/basic', [CardBasic::class, 'index'])->name('cards-basic');
@@ -114,18 +114,26 @@ Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic')
 
 //TELEGRAM WEBEX BOT
 
-//product
-Route::group(['prefix' => 'products'], function () {
-    Route::get('/', [ProductController::class, 'index'])->name('get-products');
-    Route::get('/add-new-product', [ProductController::class, 'addProduct'])->name('add-new-product');
-    Route::post('/edit-product/{id}', [ProductController::class, 'editProduct'])->name('edit-product');
-    Route::get('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('delete-product');
+//auth
+Route::get('/', [LoginBasic::class, 'index'])->name('login');
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('/login', [LoginBasic::class, 'login'])->name('login-data');
+    Route::get('/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
+    Route::get('/logout', [LoginBasic::class, 'logout'])->name('logout');
 });
 
-//category
-Route::group(['prefix' => 'categories'], function () {
-    Route::get('/', [CategoryController::class, 'index'])->name('get-categories');
-    Route::post('/add-new-category', [CategoryController::class, 'addCategory'])->name('add-new-category');
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'products'], function () {
+        Route::get('/', [ProductController::class, 'index'])->name('get-products');
+        Route::get('/add-new-product', [ProductController::class, 'addProduct'])->name('add-new-product');
+        Route::post('/edit-product/{id}', [ProductController::class, 'editProduct'])->name('edit-product');
+        Route::get('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('delete-product');
+    });
+
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('get-categories');
+        Route::post('/add-new-category', [CategoryController::class, 'addCategory'])->name('add-new-category');
+    });
 });
 
 //inteface
