@@ -44,6 +44,15 @@ class InterfaceController extends Controller
             $query->where('product_details->cashback', '<=', (int) $data['procent']);
         }
 
+        if (array_key_exists('sorting', $data)) {
+
+            if ($data['sorting'] == 'max') {
+                $query->orderByRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(product_details, "$.price_in_store")) AS UNSIGNED) DESC');
+            } elseif ($data['sorting'] == 'min') {
+                $query->orderByRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(product_details, "$.price_in_store")) AS UNSIGNED) ASC');
+            }
+        }
+
         $products = $query->with('images', 'category')->whereNotNull('category_id')->orderBy('id', 'desc')->get();
 
         foreach ($products as $key => $product) {

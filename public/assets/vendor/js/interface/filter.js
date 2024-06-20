@@ -46,8 +46,12 @@ $(function () {
                   </div>
               </div>
           `;
-      });
-      
+        });
+
+        if(data.length == 0){
+          html = `<h3 class="text-center">Ничего не найдено</h3>`
+        }
+     
         $('#product-start').html(html);
        
       }
@@ -57,23 +61,58 @@ $(function () {
   //add button submit
   $('#title-search-submit').on('click', function(){
     let textInput = $('#title-search').val();
+    $('#select-submit').val('');
+    $('#procent-submit').val(0);
+    $('#procent').text(0);
+    $('.category-button').removeClass('active');
     filter({'title': textInput})
   });
   
   $('.category-button').on('click', function(){
     let category = $(this).val();
+    $('#select-submit').val('');
+    $('#title-search').val('');
+    $('#procent-submit').val(0);
+    $('#procent').text(0);
+    $(this).addClass('active');
     filter({'category': category})
   });
 
   $('#select-submit').on('change', function(){
     let sorting = $(this).val();
+    $('#title-search').val('');
+    $('#procent-submit').val(0);
+    $('#procent').text(0);
+    $('.category-button').removeClass('active');
     filter({'sorting': sorting})
   });
 
   $('#procent-submit').on('change', function(){
     let procent = $(this).val();
+    $('#select-submit').val('');
+    $('#title-search').val('');
+    $('.category-button').removeClass('active');
     filter({'procent': procent})
   });
+
+  // function removeFilter(indelible) {
+  //   let filters = {
+  //     'title': $('#title-search').val(''),
+  //     'category': $('.category-button').removeClass('active'),
+  //     'sorting': $('#select-submit').val(''),
+  //     'procent': $('#procent-submit').val(''),
+  //     'procent-value': $('#procent').text(0)
+  //   }
+
+  //   Object.keys(filters).map(element => {
+  //     filters.element
+  //   })
+  //   // $('#select-submit').val('');
+  //   // $('#title-search').val('');
+  //   // $('#procent-submit').val(0);
+  //   // $('#procent').text(0);
+  //   // $('.category-button').removeClass('active');
+  // }
 
   
 //   $('#title-search-submit').on('click', function() {
