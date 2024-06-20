@@ -41,11 +41,13 @@ class InterfaceController extends Controller
         }
 
         if (array_key_exists('procent', $data)) {
-            $query->where('product_details->cashback', '<=', (int) $data['procent']);
+            $procent = (int) $data['procent'];
+            if($procent > 0){
+                $query->where('product_details->cashback', '<=', $procent);
+            }
         }
 
         if (array_key_exists('sorting', $data)) {
-
             if ($data['sorting'] == 'max') {
                 $query->orderByRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(product_details, "$.price_in_store")) AS UNSIGNED) DESC');
             } elseif ($data['sorting'] == 'min') {
