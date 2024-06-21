@@ -169,6 +169,10 @@ return [
     App\Providers\EventServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
     App\Providers\MenuServiceProvider::class,
+
+    // Laravel Scout
+    TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
+    Laravel\Scout\ScoutServiceProvider::class,
   ])->toArray(),
 
   /*

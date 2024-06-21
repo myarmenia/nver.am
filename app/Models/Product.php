@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $table = 'products';
 
@@ -32,6 +33,18 @@ class Product extends Model
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
     } 
+
+    public function toSearchableArray()
+    {
+        $decodedDetails = json_decode($this->product_details, true);
+
+        return [
+            'id' => $this['id'],
+            'title_am' => $decodedDetails['title_am'],
+            'title' => $decodedDetails['title'],
+        ];
+
+    }
 
 
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use DefStudio\Telegraph\Facades\Telegraph;
 use GeminiAPI\Client;
 use GeminiAPI\Resources\Parts\TextPart;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 
 
@@ -54,8 +55,9 @@ class ProductService
                             ){
                                 continue;
                             }
-                          
+
                             $tmp['owner'] = str_replace('@', '', $tmp['owner']);
+                            $tmp['title_am'] = GoogleTranslate::trans($tmp['title'], 'hy', 'ru');
                             $tmp['price_in_store'] = (int) str_replace(' ', '', $tmp['price_in_store']);
     
                             if(!str_contains($tmp['cashback'], '%')){
