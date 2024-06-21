@@ -49,7 +49,7 @@ class ProductController extends Controller
         $product->product_details = json_encode($data, JSON_UNESCAPED_UNICODE);
 
         $product->save();
-        session(['success' => 'Ապրանքը փոփոխված և հաստատված է։']);
+        session(['success' => 'Продукт был модифицирован и одобрен.']);
         
         return redirect()->back();
     }

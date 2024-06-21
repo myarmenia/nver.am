@@ -115,7 +115,7 @@ Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic')
 //TELEGRAM WEBEX BOT
 
 //auth
-Route::get('/', [LoginBasic::class, 'index'])->name('login');
+Route::get('/admin', [LoginBasic::class, 'index'])->name('login');
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [LoginBasic::class, 'login'])->name('login-data');
     Route::get('/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
@@ -137,8 +137,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 //inteface
+Route::get('/', [InterfaceController::class, 'index'])->name('get-interface');
 Route::group(['prefix' => 'interface'], function () {
-    Route::get('/', [InterfaceController::class, 'index'])->name('get-interface');
     Route::get('/shop-details/{id}', [InterfaceController::class, 'detail'])->name('get-details');
     Route::post('/search-filter', [InterfaceController::class, 'filterSearch'])->name('search-title');
 });

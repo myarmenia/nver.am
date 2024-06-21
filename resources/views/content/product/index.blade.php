@@ -6,9 +6,9 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title text-primary">Product</h5>
+                <h5 class="card-title text-primary">Продукты</h5>
                 <form action="{{ route('add-new-product') }}" method="GET">
-                    <button> Ստանալ նոր պոստեր</button>
+                    <button> Получать новые публикации</button>
                 </form>
                 @error('category_id')
                     <div class="alert alert-danger" role="alert">
@@ -42,14 +42,14 @@
                                         <form method="POST" action="{{ route('edit-product', ['id' => $product->id]) }}">
                                             <div class="">
                                                 <div class="m-1 row">
-                                                    <label for="html5-text-input" class="col-md-2 col-form-label">Title</label>
+                                                    <label for="html5-text-input" class="col-md-2 col-form-label">Заголовок</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control" name="title"
                                                             value="{{ json_decode($product->product_details)->title }}" />
                                                     </div>
                                                 </div>
                                                 <div class="m-1 row">
-                                                    <label for="html5-text-input" class="col-md-2 col-form-label">Price</label>
+                                                    <label for="html5-text-input" class="col-md-2 col-form-label">Цена</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control" name="price_in_store"
                                                             value="{{ json_decode($product->product_details)->price_in_store }}" />
@@ -57,24 +57,24 @@
                                                 </div>
                                                 <div class="m-1 row">
                                                     <label for="html5-text-input"
-                                                        class="col-md-2 col-form-label">Cashback</label>
+                                                        class="col-md-2 col-form-label">Кешбек</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control" name="cashback"
                                                             value="{{ json_decode($product->product_details)->cashback }}" />
                                                     </div>
                                                 </div>
                                                 <div class="m-1 row">
-                                                    <label for="html5-text-input" class="col-md-2 col-form-label">Owner</label>
+                                                    <label for="html5-text-input" class="col-md-2 col-form-label">Владелец</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control" name="owner"
                                                             value="{{ json_decode($product->product_details)->owner }}" />
                                                     </div>
                                                 </div>
                                                 <div class="m-1 row">
-                                                    <label for="html5-text-input" class="col-md-2 col-form-label">Type</label>
+                                                    <label for="html5-text-input" class="col-md-2 col-form-label">Категория</label>
                                                     <div class="col-md-10">
                                                         <select id="defaultSelect" class="form-select" name="category_id">
-                                                            <option value="">Select</option>
+                                                            <option value="">Выбирать</option>
                                                             @foreach ($categories as $category)
                                                                 <option value="{{ $category->id }}">{{ $category->name }}
                                                                 </option>
@@ -84,8 +84,8 @@
                                                 </div>
                                             </div>
                                             <div class="p-2">
-                                                <button type="submit" class="btn btn-success" value="edit">Հաստատել</button>
-                                                <a class="btn btn-danger" href="{{ route('delete-product', ['id' => $product->id]) }}">Ջնջել</a>
+                                                <button type="submit" class="btn btn-success" value="edit">Подтверждать</button>
+                                                <a class="btn btn-danger" href="{{ route('delete-product', ['id' => $product->id]) }}">Удалить</a>
                                             </div>
                                         </form>
 

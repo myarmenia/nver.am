@@ -55,7 +55,7 @@ class InterfaceController extends Controller
             }
         }
 
-        $products = $query->with('images', 'category')->whereNotNull('category_id')->orderBy('id', 'desc')->get();
+        $products = $query->with('images', 'category')->whereNotNull('category_id')->orderBy('updated_at', 'desc')->get();
 
         foreach ($products as $key => $product) {
 
