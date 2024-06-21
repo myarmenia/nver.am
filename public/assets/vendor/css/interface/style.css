@@ -511,8 +511,9 @@
     color: white;
 }
 
-.category-button:active {
+.category-button.active {
     background-color: #7cb342;
+    color: white;
     border-color: #7cb342; 
 }
 /*** Category End ***/
