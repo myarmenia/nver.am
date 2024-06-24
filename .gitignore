@@ -14,5 +14,6 @@ yarn-error.log
 /.idea
 /.vscode
 /config/database.php
+/storage/search/*.index
 
 /bootstrap/cache/

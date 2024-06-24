@@ -1,5 +1,5 @@
 @extends('layouts/blankLayout')
-@section('title', 'Forgot Password Basic - Pages')
+@section('title', 'Продукт - детали')
 
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/interface/bootstrap.min.css') }}">
@@ -71,7 +71,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-body">
-                    <p>У вас есть 18 лет? </p>
+                    <p>Вам 18 лет или более? </p>
                     </div>
                     <div class="modal-footer">
                     <button type="button" id="year-btn-yes" class="btn btn-success" data-dismiss="modal">Да</button>
@@ -81,8 +81,6 @@
                 
                 </div>
             </div>
-  
-
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -103,8 +101,7 @@
                                     <label for="fruits">Сортировка:</label>
                                     <select id="select-submit" name="fruitlist"
                                         class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                        <option value="">Дефолт</option>
-                                        <option value="new">Новые</option>
+                                        <option value="">Новые</option>
                                         <option value="min">По возрастанию</option>
                                         <option value="max">По убыванию</option>
                                     </select>

@@ -33,7 +33,9 @@ class InterfaceController extends Controller
         $query = Product::query();
 
         if (array_key_exists('title', $data)) {
-            $query->where('product_details->title', 'like', '%' . $data['title'] . '%');
+            $elasticSearchResults = Product::search($data['title'])->get()->pluck('id')->toArray();
+            $query->whereIn('id', $elasticSearchResults);
+            // $query->where('product_details->title', 'like', '%' . $data['title'] . '%');
         }
 
         if (array_key_exists('category', $data)) {
@@ -55,7 +57,7 @@ class InterfaceController extends Controller
             }
         }
 
-        $products = $query->with('images', 'category')->whereNotNull('category_id')->orderBy('id', 'desc')->get();
+        $products = $query->with('images', 'category')->whereNotNull('category_id')->orderBy('updated_at', 'desc')->get();
 
         foreach ($products as $key => $product) {
 
