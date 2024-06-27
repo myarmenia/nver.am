@@ -4,7 +4,7 @@
     "creatorName" => "ThemeSelection",
     "creatorUrl" => "https://themeselection.com",
     "templateName" => "Sneat",
-    "templateSuffix" => "Bootstrap 5 HTML Laravel Free Admin Template",
+    "templateSuffix" => "",
     "templateVersion" => "1.1.0",
     "templateFree" => true,
     "templateDescription" => "Most Powerful & Comprehensive Bootstrap 5 HTML Admin Dashboard Template built for developers!",
