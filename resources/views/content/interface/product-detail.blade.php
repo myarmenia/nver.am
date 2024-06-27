@@ -44,7 +44,7 @@
 
         <!-- Single Page Header start -->
         {{-- <div class="container-fluid page-header py-5"> </div> --}}
-        <img src="{{ asset('assets/img/interface/cart-page-header-img.png') }}" class="img-fluid banner-img"
+        <img src="{{ asset('assets/img/interface/bannerCashback.png') }}" class="img-fluid banner-img" 
             alt="Cashback header photo">
 
         <!-- Single Page Header End -->

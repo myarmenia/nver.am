@@ -164,7 +164,7 @@
                                 <div id='product-start' class="row g-4 justify-content-center">
                                     @foreach ($products as $product)
                                         <div class="col-md-6 col-lg-6 col-xl-4">
-                                            <div class="rounded position-relative fruite-item  border   rounded-bottom">
+                                            <div class="rounded position-relative fruite-item border rounded-bottom">
                                                 <div class="fruite-img">
                                                     <a href="{{ route('get-details', ['id' => $product->id]) }}"
                                                         target="_blank">
@@ -176,7 +176,7 @@
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                     style="top: 10px; left: 10px;">{{ $product->category->name }}
                                                 </div>
-                                                <div style=" overflow: auto; height: 200px;">
+                                                <div style="overflow: auto; height: 200px;">
                                                     <div class="p-4">
                                                         <h4>{{ json_decode($product->product_details)->title }}</h4>
                                                         <p>Кешбек: {{ json_decode($product->product_details)->cashback }}%
