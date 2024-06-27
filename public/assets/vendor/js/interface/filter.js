@@ -33,15 +33,24 @@
                             <h4>${productDetails.title || ''}</h4>
                             <p>Кешбек: ${productDetails.cashback || 0}%</p>
                             <p>Согласовать выкуп с: 
-                                <a href="https://t.me/${productDetails.owner || ''}" target="_blank">
+                                <a style="color: #ac51b5;" href="https://t.me/${productDetails.owner || ''}" target="_blank">
                                     ${productDetails.owner || ''}
                                 </a>
                             </p>
                             <div class="d-flex justify-content-between flex-lg-wrap">
                                 <p class="text-dark fs-5 fw-bold mb-0">
-                                    ${productDetails.price_in_store || 0} руб.
+                                    ${productDetails.price_in_store || 0} ₽
                                 </p>
                             </div>
+                            <div class="d-flex  flex-lg-wrap p-4">
+                                    <p style="text-decoration: line-through;">
+                                        ${productDetails.price_in_store || 0} ₽
+                                    </p>
+                                    &nbsp;&nbsp;
+                                    <p class="text-danger fs-5 fw-bold mb-0">
+                                        ${productDetails.price_in_store  - Math.round((productDetails.price_in_store * productDetails.cashback  ) / 100)} ₽
+                                    </p>
+                                </div>
                         </div>
                     </div>
                 </div>

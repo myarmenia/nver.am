@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Products')
+@section('title', 'Находки с WILDBERRIES | Озон | Скидки| Кешбек')
 
 @section('content')
     <div class="row">

@@ -1,5 +1,5 @@
 @extends('layouts/blankLayout')
-@section('title', 'Продукт - детали')
+@section('title', 'Находки с WILDBERRIES | Озон | Скидки| Кешбек')
 
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/interface/bootstrap.min.css') }}">
@@ -30,7 +30,7 @@
         <!-- Spinner Start -->
         <div id="spinner"
             class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" role="status"></div>
+            <div class="spinner-grow text-info" role="status"></div>
         </div>
         <!-- Spinner End -->
         @include('content/interface/include/header')
@@ -56,31 +56,37 @@
         <!-- Modal Search End -->
 
         <!-- Single Page Header start -->
-        <div class="container-fluid page-header py-5"> </div>
+        {{-- <div class="container-fluid page-header py-6"> </div> --}}
+        <img src="{{ asset('assets/img/interface/bannerCashback.png') }}" class="img-fluid banner-img" 
+            alt="Cashback header photo">
+
+
         <!-- Single Page Header End -->
 
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Fresh fruits shop</h1>
+                <h1 class="mb-4">Свежие кешбэки</h1>
 
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
-                
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-body">
-                    <p>Вам 18 лет или более? </p>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" id="year-btn-yes" class="btn btn-success" data-dismiss="modal">Да</button>
-                    <button type="button" id="year-btn-no" class="btn btn-danger" data-dismiss="modal">Нет</button>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>Вам 18 лет или более? </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="year-btn-yes" class="btn btn-success"
+                                    data-dismiss="modal">Да</button>
+                                <button type="button" id="year-btn-no" class="btn btn-danger"
+                                    data-dismiss="modal">Нет</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                
-                </div>
-            </div>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -116,10 +122,11 @@
                                             <h4>Категории</h4>
                                             <ul class="list-unstyled categorie-list">
                                                 @foreach ($categories as $category)
-                                                <li>
-                                                    <button type="submit" class="category-button" name='category' value='{{ $category->id }}'>{{ $category->name }}</button>
-                                                </li>
-                                                {{-- <div class="d-flex justify-content-between fruite-name">
+                                                    <li>
+                                                        <button type="submit" class="category-button" name='category'
+                                                            value='{{ $category->id }}'>{{ $category->name }}</button>
+                                                    </li>
+                                                    {{-- <div class="d-flex justify-content-between fruite-name">
                                                     <a href="#" name="category"><i
                                                             class="fas fa-apple-alt me-2"></i>{{ $category->name }}</a>
                                                 </div> --}}
@@ -130,10 +137,9 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <h4 class="mb-2">Процент</h4>
-                                            <input type="range" class="form-range w-100" id="procent-submit"
+                                            <input type="range" class="custom-form-range w-100" id="procent-submit"
                                                 name="procent" min="0" max="100" value="0"
-                                                oninput="document.getElementById('procent').value = this.value"
-                                                >
+                                                oninput="document.getElementById('procent').value = this.value">
                                             <output id="procent" name="procent" min-velue="0" max-value="100"
                                                 for="procent">0</output>
                                         </div>
@@ -158,31 +164,37 @@
                                 <div id='product-start' class="row g-4 justify-content-center">
                                     @foreach ($products as $product)
                                         <div class="col-md-6 col-lg-6 col-xl-4">
-                                            <div
-                                                class="rounded position-relative fruite-item  border border-secondary  rounded-bottom">
+                                            <div class="rounded position-relative fruite-item  border   rounded-bottom">
                                                 <div class="fruite-img">
                                                     <a href="{{ route('get-details', ['id' => $product->id]) }}"
                                                         target="_blank">
-                                                        <img src="{{ $product->images->count() ? route('get-file', ['path' => $product->images[0]->path]) : '' }}"
+                                                        <img style="height: 400px"
+                                                            src="{{ $product->images->count() ? route('get-file', ['path' => $product->images[0]->path]) : '' }}"
                                                             class="img-fluid w-100 rounded-top" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                     style="top: 10px; left: 10px;">{{ $product->category->name }}
                                                 </div>
-                                                <div class="p-4">
-                                                    <h4>{{ json_decode($product->product_details)->title }}</h4>
-                                                    <p>Кешбек: {{ json_decode($product->product_details)->cashback }}%
-                                                    </p>
-                                                    <p>Согласовать выкуп с: <a
-                                                            href="https://t.me/{{ json_decode($product->product_details)->owner }}"
-                                                            target="_blank">{{ json_decode($product->product_details)->owner }}</a>
-                                                    </p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0">
-                                                            {{ json_decode($product->product_details)->price_in_store }}руб.
+                                                <div style=" overflow: auto; height: 200px;">
+                                                    <div class="p-4">
+                                                        <h4>{{ json_decode($product->product_details)->title }}</h4>
+                                                        <p>Кешбек: {{ json_decode($product->product_details)->cashback }}%
+                                                        </p>
+                                                        <p>Согласовать выкуп с: <a style="color: #ac51b5;"
+                                                                href="https://t.me/{{ json_decode($product->product_details)->owner }}"
+                                                                target="_blank">{{ json_decode($product->product_details)->owner }}</a>
                                                         </p>
                                                     </div>
+                                                </div>
+                                                <div class="d-flex  flex-lg-wrap p-4">
+                                                    <p style="text-decoration: line-through;">
+                                                        {{ json_decode($product->product_details)->price_in_store }}₽
+                                                    </p>
+                                                    &nbsp;&nbsp;
+                                                    <p class="text-danger fs-5 fw-bold mb-0">
+                                                        {{ getProductProcent(json_decode($product->product_details)->price_in_store, json_decode($product->product_details)->cashback) }}₽
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -293,8 +305,8 @@
             </div>
         </div>
 
-        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
-                class="fa fa-arrow-up"></i></a>
+        <a href="#" class="btn border-3 border-primary rounded-circle back-to-top"
+            style="background-color: #8d0de7; color: white"><i class="fa fa-arrow-up"></i></a>
 
     </body>
 
