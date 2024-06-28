@@ -57,7 +57,7 @@
 
         <!-- Single Page Header start -->
         {{-- <div class="container-fluid page-header py-6"> </div> --}}
-        <img src="{{ asset('assets/img/interface/bannerCashback.png') }}" class="img-fluid banner-img" 
+        <img src="{{ asset('assets/img/interface/bannerCashback.png') }}" class="img-fluid banner-img"
             alt="Cashback header photo">
 
 
@@ -168,9 +168,19 @@
                                                 <div class="fruite-img">
                                                     <a href="{{ route('get-details', ['id' => $product->id]) }}"
                                                         target="_blank">
-                                                        <img style="height: 400px"
-                                                            src="{{ $product->images->count() ? route('get-file', ['path' => $product->images[0]->path]) : '' }}"
-                                                            class="img-fluid w-100 rounded-top" alt="">
+                                                        @if ($product->videos->count())
+                                                            <video style="height: 400px" controls>
+                                                                <source
+                                                                    src="{{ route('get-file', ['path' => $product->videos[0]->path]) }}"
+                                                                    type="video/mp4">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                        @else
+                                                            <img style="height: 400px" loading="lazy"
+                                                                src="{{ $product->images->count() ? route('get-file', ['path' => $product->images[0]->path]) : '' }}"
+                                                                class="img-fluid w-100 rounded-top" alt="">
+                                                        @endif
+                                                        
                                                     </a>
                                                 </div>
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"

@@ -27,7 +27,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::with('images')->whereNull('category_id')->orderBy('id', 'desc')->get();
+        $products = Product::with(['images', 'videos'])->whereNull('category_id')->orderBy('id', 'desc')->get();
         $categories = Category::all();
 
         return view('content.product.index', ['products' => $products, 'categories' => $categories]);

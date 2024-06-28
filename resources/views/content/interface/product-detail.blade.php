@@ -44,7 +44,7 @@
 
         <!-- Single Page Header start -->
         {{-- <div class="container-fluid page-header py-5"> </div> --}}
-        <img src="{{ asset('assets/img/interface/bannerCashback.png') }}" class="img-fluid banner-img" 
+        <img src="{{ asset('assets/img/interface/bannerCashback.png') }}" class="img-fluid banner-img"
             alt="Cashback header photo">
 
         <!-- Single Page Header End -->
@@ -69,13 +69,22 @@
                                             @endforeach
                                         </div>
                                         <div class="carousel-inner">
-                                            @foreach ($product->images as $index => $image)
-                                                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                                    <img class="d-block w-100"
-                                                        src="{{ route('get-file', ['path' => $image->path]) }}"
-                                                        alt="Slide {{ $index + 1 }}" />
-                                                </div>
-                                            @endforeach
+                                            @if ($product->videos->count())
+                                                <video class="d-block w-100" controls>
+                                                    <source
+                                                        src="{{ route('get-file', ['path' => $product->videos[0]->path]) }}"
+                                                        type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            @else
+                                                @foreach ($product->images as $index => $image)
+                                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                                        <img class="d-block w-100"
+                                                            src="{{ route('get-file', ['path' => $image->path]) }}"
+                                                            alt="Slide {{ $index + 1 }}" />
+                                                    </div>
+                                                @endforeach
+                                            @endif
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselExample" role="button"
                                             data-bs-slide="prev">
