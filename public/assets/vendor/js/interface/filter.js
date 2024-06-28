@@ -15,7 +15,7 @@
           let html = '';
        
           data.map(element => {
-            const imageUrl = element.images[0].path;
+            const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
             const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
         
             html += `
@@ -23,7 +23,13 @@
                     <div class="rounded position-relative fruite-item border rounded-bottom">
                         <div class="fruite-img">
                             <a href="/interface/shop-details/${element.id}" target="_blank">
-                                <img style="height: 400px" src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="">
+                                ${element.videos.length
+                                    ? `<video style="height: 400px" controls>
+                                        <source src="${fileUrl}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                      </video>`
+                                    : `<img style="height: 400px" src="${fileUrl}" class="img-fluid w-100 rounded-top" alt="">`
+                                }
                             </a>
                         </div>
                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">

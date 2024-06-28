@@ -57,12 +57,14 @@ class InterfaceController extends Controller
             }
         }
 
-        $products = $query->with('images', 'category')->whereNotNull('category_id')->orderBy('updated_at', 'desc')->get();
+        $products = $query->with('images', 'category', 'videos')->whereNotNull('category_id')->orderBy('updated_at', 'desc')->get();
 
         foreach ($products as $key => $product) {
-
-            $products[$key]->images[0]->path = route('get-file', ['path' => $product->images[0]->path]);
-
+            if($product->videos->count()){
+                $products[$key]->videos[0]->path = route('get-file', ['path' => $product->videos[0]->path]);
+            }else {
+                $products[$key]->images[0]->path = route('get-file', ['path' => $product->images[0]->path]);
+            }
         }
 
         return response()->json($products);

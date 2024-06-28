@@ -30,8 +30,16 @@
                             <div class="card mb-3">
                                 <div class="row g-0">
                                     <div class="col-md-4">
-                                        <img width="100%"
-                                            src="{{ $product->images->count() ? route('get-file', ['path' => $product->images[0]->path]) : '' }}"></img>
+                                        @if ($product->videos->count())
+                                            <video width="100%"  controls>
+                                                <source src="{{route('get-file', ['path' => $product->videos[0]->path])}}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                          </video>
+                                        @else
+                                            <img width="100%"
+                                                src="{{ $product->images->count() ? route('get-file', ['path' => $product->images[0]->path]) : '' }}"></img>
+                                            
+                                        @endif
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">

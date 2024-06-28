@@ -3,6 +3,7 @@
 namespace App\Services\Product;
 
 use App\Models\Image;
+use App\Models\Video;
 use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Http;
 use App\Models\Product;
@@ -32,6 +33,7 @@ class ProductService
             $results = $response->json()['result'];
 
             foreach ($results as $key => $result) {
+    //   dd($result);
                 $resultMessage = $result['message'];
                 if(isset($resultMessage['text']) || isset($resultMessage['caption'])){
                     try {
@@ -102,6 +104,19 @@ class ProductService
 
                     if ($photo['success']) {
                         Image::create(['product_id' => $product->id, 'path' => $photo['path']]);
+                    }
+                }
+
+                if(isset($resultMessage['video'])){
+                    $response = Telegraph::getFileInfo($resultMessage['video']['file_id'])->send();
+                    $filePath = $response->json()['result']['file_path'];
+
+                    $downloadUrl = "https://api.telegram.org/file/bot{$botToken}/{$filePath}";
+                    $fileContent = Http::get($downloadUrl)->body();
+                    $photo = FileUploadService::upload($fileContent, basename($filePath), "telegram/$product->id");
+
+                    if ($photo['success']) {
+                        Video::create(['product_id' => $product->id, 'path' => $photo['path']]);
                     }
                 }
             }
