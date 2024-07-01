@@ -629,3 +629,12 @@ input[type=range] {
     margin-top: 0;
     cursor: pointer;
 }
+.product-img {
+    height: 400px;
+}
+
+@media screen and (max-width: 767px) {
+    .product-img {
+        height: unset;
+    }
+}

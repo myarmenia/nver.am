@@ -199,11 +199,11 @@
                     <div class="fruite-img">
                         <a href="/interface/shop-details/${element.id}" target="_blank">
                             ${element.videos.length
-                                ? `<video style="height: 400px" controls>
+                                ? `<video style="height: 400px; width: -webkit-fill-available;" controls>
                                     <source src="${fileUrl}" type="video/mp4">
                                     Your browser does not support the video tag.
                                   </video>`
-                                : `<img style="height: 400px" src="${fileUrl}" class="img-fluid w-100 rounded-top" alt="">`
+                                : `<img src="${fileUrl}" class="img-fluid w-100 rounded-top product-img" alt="">`
                             }
                         </a>
                     </div>
