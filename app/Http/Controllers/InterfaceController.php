@@ -42,10 +42,14 @@ class InterfaceController extends Controller
             $query->where('category_id', $data['category']);
         }
 
+        if (array_key_exists('cahsback100', $data)) {
+            $query->where('product_details->cashback', '=', 100);
+        }
+
         if (array_key_exists('procent', $data)) {
             $procent = (int) $data['procent'];
             if($procent > 0){
-                $query->where('product_details->cashback', '<=', $procent);
+                $query->where('product_details->cashback', '>=', $procent);
             }
         }
 
@@ -69,6 +73,24 @@ class InterfaceController extends Controller
 
         return response()->json($products);
 
+    }
+
+    public function getProducts()
+    {
+        $products = Product::with([
+            'images', 
+            'videos', 
+            'category'])->whereHas('category', function ($query) {
+                $query->where('name', '!=', '18+');
+            })->whereNotNull('category_id')->orderBy('id', 'desc')->get();
+        foreach ($products as $key => $product) {
+            if($product->videos->count()){
+                $products[$key]->videos[0]->path = route('get-file', ['path' => $product->videos[0]->path]);
+            }else {
+                $products[$key]->images[0]->path = route('get-file', ['path' => $product->images[0]->path]);
+            }
+        }
+        return response()->json($products);
     }
 
 }

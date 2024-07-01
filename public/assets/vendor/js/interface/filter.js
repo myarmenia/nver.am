@@ -1,70 +1,85 @@
   $(function () {
+
+    //get begin product
+    $.ajax({
+      type: "GET",
+      url: '/interface/get-products?page=1',
+      cache: false,
+      success: function (data) {
+        addProducts(data)
+      }
+    });
+
+
  
     // Filter
-  
+
     function filter(data) {
-  
+      let adult = sessionStorage.getItem('year');
       $.ajax({
         type: "POST",
         url: '/interface/search-filter',
         data: {
+          adult: adult,
           data: data,
         },
         cache: false,
         success: function (data) {
-          let html = '';
+          addProducts(data)
+
+          // let html = '';
        
-          data.map(element => {
-            const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
-            const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
+          // data.map(element => {
+          //   const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
+          //   const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
         
-            html += `
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="rounded position-relative fruite-item border rounded-bottom">
-                        <div class="fruite-img">
-                            <a href="/interface/shop-details/${element.id}" target="_blank">
-                                ${element.videos.length
-                                    ? `<video style="height: 400px" controls>
-                                        <source src="${fileUrl}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                      </video>`
-                                    : `<img style="height: 400px" src="${fileUrl}" class="img-fluid w-100 rounded-top" alt="">`
-                                }
-                            </a>
-                        </div>
-                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                            ${element.category.name}
-                        </div>
-                        <div style="overflow: auto; height: 200px;">
-                          <div class="p-4">
-                            <h4>${productDetails.title || ''}</h4>
-                            <p>Кешбек: ${productDetails.cashback || 0}%</p>
-                            <p>Согласовать выкуп с: 
-                              <a style="color: #ac51b5;" href="https://t.me/${productDetails.owner || ''}" target="_blank">
-                                  ${productDetails.owner || ''}
-                              </a>
-                            </p>
-                          </div>
-                        </div>
-                        <div class="d-flex  flex-lg-wrap p-4">
-                          <p style="text-decoration: line-through;">
-                              ${productDetails.price_in_store || 0}₽
-                          </p>
-                          &nbsp;&nbsp;
-                          <p class="text-danger fs-5 fw-bold mb-0">
-                              ${productDetails.price_in_store  - Math.round((productDetails.price_in_store * productDetails.cashback  ) / 100)}₽
-                          </p>
-                        </div>
-                    </div>
-                </div>
-            `;
-          });
+          //   html += `
+          //       <div class="col-md-6 col-lg-6 col-xl-4">
+          //           <div class="rounded position-relative fruite-item border rounded-bottom">
+          //               <div class="fruite-img">
+          //                   <a href="/interface/shop-details/${element.id}" target="_blank">
+          //                       ${element.videos.length
+          //                           ? `<video style="height: 400px" controls>
+          //                               <source src="${fileUrl}" type="video/mp4">
+          //                               Your browser does not support the video tag.
+          //                             </video>`
+          //                           : `<img style="height: 400px" src="${fileUrl}" class="img-fluid w-100 rounded-top" alt="">`
+          //                       }
+          //                   </a>
+          //               </div>
+          //               <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+          //                   ${element.category.name}
+          //               </div>
+          //               <div style="overflow: auto; height: 200px;">
+          //                 <div class="p-4">
+          //                   <h4>${productDetails.title || ''}</h4>
+          //                   <p>Кешбек: ${productDetails.cashback || 0}%</p>
+          //                   <p>Согласовать выкуп с: 
+          //                     <a style="color: #ac51b5;" href="https://t.me/${productDetails.owner || ''}" target="_blank">
+          //                         ${productDetails.owner || ''}
+          //                     </a>
+          //                   </p>
+          //                 </div>
+          //               </div>
+          //               <div class="d-flex  flex-lg-wrap p-4">
+          //                 <p style="text-decoration: line-through;">
+          //                     ${productDetails.price_in_store || 0}₽
+          //                 </p>
+          //                 &nbsp;&nbsp;
+          //                 <p class="text-danger fs-5 fw-bold mb-0">
+          //                     ${productDetails.price_in_store  - Math.round((productDetails.price_in_store * productDetails.cashback  ) / 100)}₽
+          //                 </p>
+          //               </div>
+          //           </div>
+          //       </div>
+          //   `;
+          // });
   
-          if(data.length == 0){
-            html = `<h3 class="text-center">Ничего не найдено</h3>`
-          }
+          // if(data.length == 0){
+          //   html = `<h3 class="text-center">Ничего не найдено</h3>`
+          // }
        
-          $('#product-start').html(html);
+          // $('#product-start').html(html);
          
         }
       });
@@ -79,6 +94,16 @@
       $('.category-button').removeClass('active');
       filter({'title': textInput})
     });
+
+    $('#cahsback100').on('click', function(){
+      $('#title-search').val('');
+      $('#select-submit').val('');
+      $('#procent-submit').val(0);
+      $('#procent').text(0);
+      $('.category-button').removeClass('active');
+      filter({'cahsback100': true})
+    });
+
     
     $('.category-button').on('click', function(){
       let category = $(this).val();
@@ -133,6 +158,7 @@
       $("#myModal").modal('hide');
 
     });
+  
 
     $('#year-btn-no').on('click', function(){
       sessionStorage.setItem('year', false);
@@ -156,6 +182,64 @@
           $(this).find('button').prop('disabled', true);
         }
       });
+    }
+
+
+    function addProducts(data)
+    {
+      let html = '';
+       
+      data.map(element => {
+        const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
+        const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
+
+        html += `
+            <div class="col-md-6 col-lg-6 col-xl-4">
+                <div class="rounded position-relative fruite-item border rounded-bottom">
+                    <div class="fruite-img">
+                        <a href="/interface/shop-details/${element.id}" target="_blank">
+                            ${element.videos.length
+                                ? `<video style="height: 400px" controls>
+                                    <source src="${fileUrl}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                  </video>`
+                                : `<img style="height: 400px" src="${fileUrl}" class="img-fluid w-100 rounded-top" alt="">`
+                            }
+                        </a>
+                    </div>
+                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                        ${element.category.name}
+                    </div>
+                    <div style="overflow: auto; height: 200px;">
+                      <div class="p-4">
+                        <h4>${productDetails.title || ''}</h4>
+                        <p>Кешбек: ${productDetails.cashback || 0}%</p>
+                        <p>Согласовать выкуп с: 
+                          <a style="color: #ac51b5;" href="https://t.me/${productDetails.owner || ''}" target="_blank">
+                              ${productDetails.owner || ''}
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="d-flex  flex-lg-wrap p-4">
+                      <p style="text-decoration: line-through;">
+                          ${productDetails.price_in_store || 0}₽
+                      </p>
+                      &nbsp;&nbsp;
+                      <p class="text-danger fs-5 fw-bold mb-0">
+                          ${productDetails.price_in_store  - Math.round((productDetails.price_in_store * productDetails.cashback  ) / 100)}₽
+                      </p>
+                    </div>
+                </div>
+            </div>
+        `;
+      });
+
+      if(data.length == 0){
+        html = `<h3 class="text-center">Ничего не найдено</h3>`
+      }
+   
+      $('#product-start').html(html);
     }
    
 
