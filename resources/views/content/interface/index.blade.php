@@ -63,8 +63,8 @@
         <!-- Single Page Header End -->
 
         <!-- Product Shop Start-->
-        <div class="container-fluid fruite py-5">
-            <div class="container py-5">
+        <div class="container-fluid fruite">
+            <div class="container py-4">
                 <h1 class="mb-4">Свежие кешбэки</h1>
 
                 <!-- Modal -->
