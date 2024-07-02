@@ -42,17 +42,8 @@ class ProductController extends Controller
 
     public function editProduct(EditProductRequest $request, $id)
     {
-        $data = $request->all();
-        $product = Product::find($id);
-        $decodedDetail = json_decode($product->product_details, true);
-        $product->category_id = $data['category_id'];
-        unset($data['category_id']);
-        $data['title_am'] = $decodedDetail['title_am'] ?? '';
-        $product->product_details = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-        $product->save();
-        session(['success' => 'Продукт был модифицирован и одобрен.']);
-        
+        $this->productService->editProduct($request->all(), $id);
+                
         return redirect()->back();
     }
 

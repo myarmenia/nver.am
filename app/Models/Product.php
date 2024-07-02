@@ -17,7 +17,8 @@ class Product extends Model
         'category_id',
         'update_id', 
         'media_group_id', 
-        'product_details'
+        'product_details',
+        'top_at'
     ];
 
     protected $casts = [

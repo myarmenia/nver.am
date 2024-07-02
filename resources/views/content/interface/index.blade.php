@@ -91,11 +91,10 @@
                         <div class="row g-4">
                             <div class="col-xl-3">
                                 <div class="input-group w-100 mx-auto d-flex">
-                                    <div class="d-flex">
-                                        <input type="search" id="title-search" class="form-control p-3" name="title"
-                                            placeholder="поиск..." value="{{ request('title') }}"
-                                            aria-describedby="search-icon-1">
-                                        <button type="submit" id="title-search-submit" class="input-group-text p-3"><i
+                                    <div class="d-flex search-input-interface">
+                                        <input type="text" id="title-search" class="form-control p-3" name="title"
+                                            placeholder="поиск..." value="{{ request('title') }}">
+                                        <button type="submit" id="title-search-submit" class="input-group-text p-3 "><i
                                                 class="fa fa-search"></i></button>
                                     </div>
                                 </div>

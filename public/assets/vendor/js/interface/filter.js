@@ -188,16 +188,26 @@
     function addProducts(data)
     {
       let html = '';
-       
+      let currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 10);
+
       data.map(element => {
         const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
         const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
+        let topImg = false;
+        if(element.top_at){
+          let elementDate = new Date(element.top_at);
+
+          if (currentDate.getTime() > elementDate.getTime()) {
+            topImg = true;
+            } 
+        }
 
         html += `
             <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="rounded position-relative fruite-item border rounded-bottom">
                     <div class="fruite-img">
-                        <a href="/interface/shop-details/${element.id}" target="_blank">
+                        <a href="/interface/shop-details/${element.id}" style="position: relative" target="_blank">
                             ${element.videos.length
                                 ? `<video style="height: 400px; width: -webkit-fill-available;" controls>
                                     <source src="${fileUrl}" type="video/mp4">
@@ -206,6 +216,7 @@
                                 : `<img src="${fileUrl}" class="img-fluid w-100 rounded-top product-img" alt="">`
                             }
                         </a>
+                        ${topImg ? `<img src="../../../../assets/img/interface/top.png" class="top-photo" width="70" alt="Топ"/>` : ''}
                     </div>
                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                         ${element.category.name}
