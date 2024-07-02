@@ -90,6 +90,12 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="m-1 row">
+                                                    <label for="topcheck" class="col-md-2 col-form-label">Топ</label>
+                                                    <div class="col-md-10">
+                                                        <input class="form-check-input" type="checkbox" name="top" value="1" id="topcheck" />
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="p-2">
                                                 <button type="submit" class="btn btn-success" value="edit">Подтверждать</button>

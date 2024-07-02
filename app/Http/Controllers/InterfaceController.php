@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InterfaceController extends Controller
@@ -30,22 +31,29 @@ class InterfaceController extends Controller
     {
         $data = $request->data;
 
+        $now = Carbon::now();
+        $tenDaysAgo = $now->subDays(10);
+
         $query = Product::query();
 
         if (array_key_exists('title', $data)) {
             $elasticSearchResults = Product::search($data['title'])->get()->pluck('id')->toArray();
             $query->whereIn('id', $elasticSearchResults);
-            // $query->where('product_details->title', 'like', '%' . $data['title'] . '%');
+            // $query->where('product_details->title', 'like', '%' . $data['title'] . '%'); 
         }
 
         if (array_key_exists('category', $data)) {
             $query->where('category_id', $data['category']);
         }
 
+        if (array_key_exists('cahsback100', $data)) {
+            $query->where('product_details->cashback', '=', 100);
+        }
+
         if (array_key_exists('procent', $data)) {
             $procent = (int) $data['procent'];
             if($procent > 0){
-                $query->where('product_details->cashback', '<=', $procent);
+                $query->where('product_details->cashback', '>=', $procent);
             }
         }
 
@@ -57,7 +65,16 @@ class InterfaceController extends Controller
             }
         }
 
-        $products = $query->with('images', 'category', 'videos')->whereNotNull('category_id')->orderBy('updated_at', 'desc')->get();
+        $products = $query->with('images', 'category', 'videos')
+            ->whereNotNull('category_id')
+            ->orderByRaw("
+                CASE 
+                    WHEN top_at IS NOT NULL AND top_at >= ? THEN 0 
+                    ELSE 1 
+                END,
+                top_at DESC,
+                created_at DESC ", [$tenDaysAgo])
+            ->get();
 
         foreach ($products as $key => $product) {
             if($product->videos->count()){
@@ -69,6 +86,37 @@ class InterfaceController extends Controller
 
         return response()->json($products);
 
+    }
+
+    public function getProducts()
+    {
+        $now = Carbon::now();
+        $tenDaysAgo = $now->subDays(10);
+
+        $products = Product::with([
+            'images', 
+            'videos', 
+            'category'])->whereHas('category', function ($query) {
+                $query->where('name', '!=', '18+');})
+            ->whereNotNull('category_id')
+            ->orderByRaw("
+                CASE 
+                    WHEN top_at IS NOT NULL AND top_at >= ? THEN 0 
+                    ELSE 1 
+                END,
+                top_at DESC,
+                created_at DESC ", [$tenDaysAgo])
+            // ->orderBy('id', 'desc')
+            ->get();
+
+        foreach ($products as $key => $product) {
+            if($product->videos->count()){
+                $products[$key]->videos[0]->path = route('get-file', ['path' => $product->videos[0]->path]);
+            }else {
+                $products[$key]->images[0]->path = route('get-file', ['path' => $product->images[0]->path]);
+            }
+        }
+        return response()->json($products);
     }
 
 }

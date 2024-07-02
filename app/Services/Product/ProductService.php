@@ -5,6 +5,7 @@ namespace App\Services\Product;
 use App\Models\Image;
 use App\Models\Video;
 use App\Services\FileUploadService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
@@ -132,6 +133,27 @@ class ProductService
             dd($e->getMessage());
         }
 
+    }
+
+    public function editProduct($data, $id)
+    {
+        $product = Product::find($id);
+        $decodedDetail = json_decode($product->product_details, true);
+        $product->category_id = $data['category_id'];
+        unset($data['category_id']);
+        $data['title_am'] = $decodedDetail['title_am'] ?? '';
+        $product->product_details = json_encode($data, JSON_UNESCAPED_UNICODE);
+        if(array_key_exists('top', $data)){
+            $product->top_at = Carbon::now();
+        }
+
+        if ($product->save()) {
+            session(['success' => 'Продукт был модифицирован и одобрен.']);
+        } else {
+            session(['success' => 'Продукт не был модифицирован.']);
+        }
+        
+        return true;
     }
 
     public function setGemini($text)

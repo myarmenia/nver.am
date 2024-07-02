@@ -60,12 +60,11 @@
         <img src="{{ asset('assets/img/interface/bannerCashback.png') }}" class="img-fluid banner-img"
             alt="Cashback header photo">
 
-
         <!-- Single Page Header End -->
 
-        <!-- Fruits Shop Start-->
-        <div class="container-fluid fruite py-5">
-            <div class="container py-5">
+        <!-- Product Shop Start-->
+        <div class="container-fluid fruite">
+            <div class="container py-4">
                 <h1 class="mb-4">Свежие кешбэки</h1>
 
                 <!-- Modal -->
@@ -92,11 +91,10 @@
                         <div class="row g-4">
                             <div class="col-xl-3">
                                 <div class="input-group w-100 mx-auto d-flex">
-                                    <div class="d-flex">
-                                        <input type="search" id="title-search" class="form-control p-3" name="title"
-                                            placeholder="поиск..." value="{{ request('title') }}"
-                                            aria-describedby="search-icon-1">
-                                        <button type="submit" id="title-search-submit" class="input-group-text p-3"><i
+                                    <div class="d-flex search-input-interface">
+                                        <input type="text" id="title-search" class="form-control p-3" name="title"
+                                            placeholder="поиск..." value="{{ request('title') }}">
+                                        <button type="submit" id="title-search-submit" class="input-group-text p-3 "><i
                                                 class="fa fa-search"></i></button>
                                     </div>
                                 </div>
@@ -134,17 +132,19 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    <img class="cashback-100-procent" id="cahsback100" src="{{ asset('assets/img/interface/cashBackButton.png') }}"
+                                            alt="100% Cashback">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
-                                            <h4 class="mb-2">Процент</h4>
+                                            <h4 class="mb-2">Процент кешбека</h4>
                                             <input type="range" class="custom-form-range w-100" id="procent-submit"
                                                 name="procent" min="0" max="100" value="0"
                                                 oninput="document.getElementById('procent').value = this.value">
                                             <output id="procent" name="procent" min-velue="0" max-value="100"
-                                                for="procent">0</output>
+                                                for="procent">0</output>%
                                         </div>
                                     </div>
-
+                                            
                                     {{-- Start Banner --}}
                                     {{-- <div class="col-lg-12">
                                         <div class="position-relative">
@@ -162,7 +162,7 @@
                             </div>
                             <div class="col-lg-9">
                                 <div id='product-start' class="row g-4 justify-content-center">
-                                    @foreach ($products as $product)
+                                    {{-- @foreach ($products as $product)
                                         <div class="col-md-6 col-lg-6 col-xl-4">
                                             <div class="rounded position-relative fruite-item border rounded-bottom">
                                                 <div class="fruite-img">
@@ -208,7 +208,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                             </div>
                         </div>
@@ -216,7 +216,7 @@
                 </div>
             </div>
         </div>
-        <!-- Fruits Shop End-->
+        <!-- Product Shop End-->
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
