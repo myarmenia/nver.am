@@ -651,6 +651,14 @@ input[type=range] {
     right: 80px;
 }
 
+.top-photo-adult {
+    filter: blur(1.5rem);
+}
+
+.text-blur {
+    filter: blur(7px);
+}
+
 @media screen and (max-width: 767px) {
     .product-img {
         height: unset;

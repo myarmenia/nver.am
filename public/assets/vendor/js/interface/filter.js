@@ -1,17 +1,21 @@
   $(function () {
 
     //get begin product
+    let adult = sessionStorage.getItem('year');
+
     $.ajax({
-      type: "GET",
+      type: "POST",
       url: '/interface/get-products?page=1',
       cache: false,
+      data: {
+        adult: adult,
+      },
       success: function (data) {
-        addProducts(data)
+        addProducts(data.data)
       }
     });
 
 
- 
     // Filter
 
     function filter(data) {
@@ -24,63 +28,8 @@
           data: data,
         },
         cache: false,
-        success: function (data) {
-          addProducts(data)
-
-          // let html = '';
-       
-          // data.map(element => {
-          //   const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
-          //   const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
-        
-          //   html += `
-          //       <div class="col-md-6 col-lg-6 col-xl-4">
-          //           <div class="rounded position-relative fruite-item border rounded-bottom">
-          //               <div class="fruite-img">
-          //                   <a href="/interface/shop-details/${element.id}" target="_blank">
-          //                       ${element.videos.length
-          //                           ? `<video style="height: 400px" controls>
-          //                               <source src="${fileUrl}" type="video/mp4">
-          //                               Your browser does not support the video tag.
-          //                             </video>`
-          //                           : `<img style="height: 400px" src="${fileUrl}" class="img-fluid w-100 rounded-top" alt="">`
-          //                       }
-          //                   </a>
-          //               </div>
-          //               <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-          //                   ${element.category.name}
-          //               </div>
-          //               <div style="overflow: auto; height: 200px;">
-          //                 <div class="p-4">
-          //                   <h4>${productDetails.title || ''}</h4>
-          //                   <p>Кешбек: ${productDetails.cashback || 0}%</p>
-          //                   <p>Согласовать выкуп с: 
-          //                     <a style="color: #ac51b5;" href="https://t.me/${productDetails.owner || ''}" target="_blank">
-          //                         ${productDetails.owner || ''}
-          //                     </a>
-          //                   </p>
-          //                 </div>
-          //               </div>
-          //               <div class="d-flex  flex-lg-wrap p-4">
-          //                 <p style="text-decoration: line-through;">
-          //                     ${productDetails.price_in_store || 0}₽
-          //                 </p>
-          //                 &nbsp;&nbsp;
-          //                 <p class="text-danger fs-5 fw-bold mb-0">
-          //                     ${productDetails.price_in_store  - Math.round((productDetails.price_in_store * productDetails.cashback  ) / 100)}₽
-          //                 </p>
-          //               </div>
-          //           </div>
-          //       </div>
-          //   `;
-          // });
-  
-          // if(data.length == 0){
-          //   html = `<h3 class="text-center">Ничего не найдено</h3>`
-          // }
-       
-          // $('#product-start').html(html);
-         
+        success: function (data) { 
+          addProducts(data.data)        
         }
       });
     }
@@ -109,6 +58,7 @@
       let category = $(this).val();
       if($(this).text() == "18+"){
         if(sessionStorage.getItem('year') === null){
+          $('#last-adult').val(category)
           $("#myModal").modal('show');
           return;
         }
@@ -154,7 +104,8 @@
       $('#procent').text(0);
       $('.category-button').removeClass('active');
       $(this).addClass('active');
-      filter({'category': $(this).val()})
+      let categoyId = $('#last-adult').val();
+      filter({'category': categoyId})
       $("#myModal").modal('hide');
 
     });
@@ -172,6 +123,35 @@
       $("#myModal").modal('hide');
 
     });
+
+      //modal show 18+
+
+      $(document).on('click', '.modal-trigger', function(event) {
+
+        event.preventDefault();
+        $('#last-clicked-value').val($(this).attr('data-type'))
+        
+        $('#myModalFilter').modal('show');
+
+      });
+
+
+      $('#year-filter-btn-yes').on('click', function(){
+        let id = $('#last-clicked-value').val();
+        let href = `/interface/shop-details/${id}`;
+        $('#title-search').val('')
+        sessionStorage.setItem('year', true);
+        window.location.href = href;
+        $("#myModalFilter").modal('hide');
+      });
+    
+  
+      $('#year-filter-btn-no').on('click', function(){
+        $("#myModalFilter").modal('hide');
+      });
+
+      
+     
 
 
     //check 18+ confirm
@@ -194,6 +174,11 @@
       data.map(element => {
         const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
         const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
+        let adult = sessionStorage.getItem('year');
+        let categoryName = element.category.name;
+
+        let adultResult = adult !== 'true' && categoryName === '18+';
+   
         let topImg = false;
         if(element.top_at){
           let elementDate = new Date(element.top_at);
@@ -206,40 +191,43 @@
         html += `
             <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="rounded position-relative fruite-item border rounded-bottom">
-                    <div class="fruite-img">
-                        <a href="/interface/shop-details/${element.id}" style="position: relative" target="_blank">
+                    <div data-type="${element.id}" class="${adultResult ? 'modal-trigger fruite-img ' : 'fruite-img'}" >
+                        <a href="${adultResult? '#' :`/interface/shop-details/${element.id}`}" 
+                          style="position: relative" >
                             ${element.videos.length
                                 ? `<video style="height: 400px; width: -webkit-fill-available;" controls>
                                     <source src="${fileUrl}" type="video/mp4">
                                     Your browser does not support the video tag.
                                   </video>`
-                                : `<img src="${fileUrl}" class="img-fluid w-100 rounded-top product-img" alt="">`
+                                : `<img src="${fileUrl}" class="${adultResult?'top-photo-adult ':''}img-fluid w-100 rounded-top product-img" alt="">`
                             }
                         </a>
                         ${topImg ? `<img src="../../../../assets/img/interface/top.png" class="top-photo" width="70" alt="Топ"/>` : ''}
                     </div>
                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                        ${element.category.name}
+                        ${categoryName}
                     </div>
-                    <div style="overflow: auto; height: 200px;">
-                      <div class="p-4">
-                        <h4>${productDetails.title || ''}</h4>
-                        <p>Кешбек: ${productDetails.cashback || 0}%</p>
-                        <p>Согласовать выкуп с: 
-                          <a style="color: #ac51b5;" href="https://t.me/${productDetails.owner || ''}" target="_blank">
-                              ${productDetails.owner || ''}
-                          </a>
+                    <div class="${adultResult?'text-blur ':''}">
+                      <div style="overflow: auto; height: 200px;">
+                        <div class="p-4">
+                          <h4>${productDetails.title || ''}</h4>
+                          <p>Кешбек: ${productDetails.cashback || 0}%</p>
+                          <p>Согласовать выкуп с: 
+                            <a style="color: #ac51b5;" href="https://t.me/${productDetails.owner || ''}" >
+                                ${productDetails.owner || ''}
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="d-flex flex-lg-wrap p-4">
+                        <p style="text-decoration: line-through;">
+                            ${productDetails.price_in_store || 0}₽
+                        </p>
+                        &nbsp;&nbsp;
+                        <p class="text-danger fs-5 fw-bold mb-0">
+                            ${productDetails.price_in_store  - Math.round((productDetails.price_in_store * productDetails.cashback  ) / 100)}₽
                         </p>
                       </div>
-                    </div>
-                    <div class="d-flex  flex-lg-wrap p-4">
-                      <p style="text-decoration: line-through;">
-                          ${productDetails.price_in_store || 0}₽
-                      </p>
-                      &nbsp;&nbsp;
-                      <p class="text-danger fs-5 fw-bold mb-0">
-                          ${productDetails.price_in_store  - Math.round((productDetails.price_in_store * productDetails.cashback  ) / 100)}₽
-                      </p>
                     </div>
                 </div>
             </div>
@@ -252,7 +240,9 @@
    
       $('#product-start').html(html);
     }
-   
+
+
+  
 
   
     // function removeFilter(indelible) {
