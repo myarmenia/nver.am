@@ -97,7 +97,7 @@
                             <div class="modal-footer">
                                 <button type="button" id="year-filter-btn-yes" class="btn btn-success"
                                     data-dismiss="modal">Да</button>
-                                <button type="button" id="year-filter-btn-yes" class="btn btn-danger"
+                                <button type="button" id="year-filter-btn-no" class="btn btn-danger"
                                     data-dismiss="modal">Нет</button>
                             </div>
                         </div>

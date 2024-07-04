@@ -142,7 +142,7 @@
         $('#title-search').val('')
         sessionStorage.setItem('year', true);
         window.location.href = href;
-        $("#myModalFilter").modal('hide');
+        // $("#myModalFilter").modal('hide');
       });
     
   
