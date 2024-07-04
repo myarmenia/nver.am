@@ -141,7 +141,7 @@ Route::get('/', [InterfaceController::class, 'index'])->name('get-interface');
 Route::group(['prefix' => 'interface'], function () {
     Route::get('/shop-details/{id}', [InterfaceController::class, 'detail'])->name('get-details');
     Route::post('/search-filter', [InterfaceController::class, 'filterSearch'])->name('search-title');
-    Route::get('/get-products', [InterfaceController::class, 'getProducts'])->name('get-products');
+    Route::post('/get-products', [InterfaceController::class, 'getProducts'])->name('get-products');
 });
 
 

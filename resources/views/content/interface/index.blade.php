@@ -83,9 +83,28 @@
                                     data-dismiss="modal">Нет</button>
                             </div>
                         </div>
-
+                        <input type="hidden" id="year-value" value="false">
                     </div>
                 </div>
+                <div class="modal fade" id="myModalFilter" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>В поиске товаров есть предметы, предназначенные для категории 18+. Вам есть 18 лет?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="year-filter-btn-yes" class="btn btn-success"
+                                    data-dismiss="modal">Да</button>
+                                <button type="button" id="year-filter-btn-yes" class="btn btn-danger"
+                                    data-dismiss="modal">Нет</button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="last-clicked-value" value="false">
+                    </div>
+                </div>
+
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -132,6 +151,8 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    
+                                    <input type="hidden" id="last-adult" value="">
                                     <img class="cashback-100-procent" id="cahsback100" src="{{ asset('assets/img/interface/cashBackButton.png') }}"
                                             alt="100% Cashback">
                                     <div class="col-lg-12">
