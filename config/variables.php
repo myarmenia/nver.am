@@ -8,7 +8,7 @@
     "templateVersion" => "1.1.0",
     "templateFree" => true,
     "templateDescription" => "100 % возврат денег за покупку с площадке Nver.am. Получите  Кэшбэк за покупку на Wildberries,Ozon и других маркетплейсах – это возможность сэкономить средства при совершении покупок в магазинах. ",
-    "templateKeyword" => "Кешбек, Wildberries, Ozon, покупок в магазинах, Товары,  Коллекции женской, мужской и детской одежды, обуви, товары для дома и спорта",
+    "templateKeyword" => "Кешбек, Wildberries, Ozon, покупок в магазинах, Товары,  Коллекции женской, мужской и детской одежды, обуви, товары для дома и спорта, Реклама товара, Получение скидки, Получение кэшбека",
     "licenseUrl" => "https://themeselection.com/license/",
     "livePreview" => "https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template-free/demo/",
     "productPage" => "https://themeselection.com/item/sneat-free-bootstrap-html-laravel-admin-template/",
