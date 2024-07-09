@@ -65,7 +65,7 @@
         <!-- Product Shop Start-->
         <div class="container-fluid fruite">
             <div class="container py-4">
-                <h1 class="mb-4">Свежие кешбэки</h1>
+                <h1 class="mb-4">На Сайте Nver.am можно найти товар со 100%  кэшбеком.</h1>
 
                 <!-- Modal -->
                 <div class="modal fade" id="myModal" role="dialog">
