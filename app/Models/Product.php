@@ -48,6 +48,7 @@ class Product extends Model
             'id' => $this['id'],
             'title_am' => $decodedDetails['title_am'],
             'title' => $decodedDetails['title'],
+            'name_latin' => replaceCyrillicWithLatin($decodedDetails['title']),
         ];
 
     }

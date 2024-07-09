@@ -40,7 +40,7 @@ class InterfaceController extends Controller
 
         $query = Product::query();
 
-        if (array_key_exists('title', $data)) {
+        if (array_key_exists('title', $data) && $data['title']) {
             $elasticSearchResults = Product::search($data['title'])->get();
             $countAdult = $elasticSearchResults->where('category_id', $adultId)->count();
             if($userAdult !== "true" && $countAdult){
@@ -48,9 +48,7 @@ class InterfaceController extends Controller
             }
 
             $elasticSearchResultsIds = $elasticSearchResults->pluck('id')->toArray();
-            // dd($elasticSearchResultsIds);
             $query->whereIn('id', $elasticSearchResultsIds);
-            // $query->where('product_details->title', 'like', '%' . $data['title'] . '%'); 
         }
 
         if (!$checkAdult && $userAdult !== "true") {
