@@ -659,6 +659,11 @@ input[type=range] {
     filter: blur(7px);
 }
 
+.btn-outline-secondary {
+    color:#8d0de7;
+    border-color:#8d0de7;
+}
+
 @media screen and (max-width: 767px) {
     .product-img {
         height: unset;

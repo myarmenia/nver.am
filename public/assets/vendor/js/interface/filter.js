@@ -1,7 +1,9 @@
   $(function () {
 
     //get begin product
-    let adult = sessionStorage.getItem('year');
+    // let adult = sessionStorage.getItem('year');
+    var globalAdult = null;
+    let adult = $('#adult-agree').val();
 
     $.ajax({
       type: "POST",
@@ -19,12 +21,17 @@
     // Filter
 
     function filter(data) {
-      let adult = sessionStorage.getItem('year');
+      // let adult = sessionStorage.getItem('year');
+      // console.log($('#adult-agree').val() || null, 777777)
+      // console.log($('#adult-agree').val(), 1111)
+      // let adult = $('#adult-agree').val() || null;
+      // console.log(adult, 777777)
+      console.log(globalAdult, "globalAdultglobalAdult")
       $.ajax({
         type: "POST",
         url: '/interface/search-filter',
         data: {
-          adult: adult,
+          adult: globalAdult,
           data: data,
         },
         cache: false,
@@ -57,7 +64,8 @@
     $('.category-button').on('click', function(){
       let category = $(this).val();
       if($(this).text() == "18+"){
-        if(sessionStorage.getItem('year') === null){
+        // let adult = $('#adult-agree').val() || null
+        if(globalAdult === null){
           $('#last-adult').val(category)
           $("#myModal").modal('show');
           return;
@@ -96,8 +104,9 @@
     });
 
     $('#year-btn-yes').on('click', function(){
-      sessionStorage.setItem('year', true);
-
+      // sessionStorage.setItem('year', true);
+      // addInput();
+      globalAdult = 'true';
       $('#select-submit').val('');
       $('#title-search').val('');
       $('#procent-submit').val(0);
@@ -109,10 +118,22 @@
       $("#myModal").modal('hide');
 
     });
+
+    // function addInput(){
+    //   let hiddenInput = $('<input>').attr({
+    //     type: 'hidden',
+    //     name: 'adult-agree',
+    //     value: 'true'
+    // });
+
+    // $('#myModal').append(hiddenInput);
+    // }
   
 
     $('#year-btn-no').on('click', function(){
-      sessionStorage.setItem('year', false);
+      // sessionStorage.setItem('year', false);
+      // $('#adult-agree').val('false')
+      globalAdult = 'false';
       // $(this).prop('disabled', true);
       $('.categorie-list li').each(function() {
         if ($(this).find('button').text() === '18+') {
@@ -140,7 +161,9 @@
         let id = $('#last-clicked-value').val();
         let href = `/interface/shop-details/${id}`;
         $('#title-search').val('')
-        sessionStorage.setItem('year', true);
+        // sessionStorage.setItem('year', true);
+        // $('#adult-agree').val('true')
+        globalAdult = 'true';
         window.location.href = href;
         // $("#myModalFilter").modal('hide');
       });
@@ -156,7 +179,7 @@
 
     //check 18+ confirm
 
-    if(sessionStorage.getItem('year') !== null && sessionStorage.getItem('year') == 'false'){
+    if($('#adult-agree').val() !== null && $('#adult-agree').val() == 'false'){
       $('.categorie-list li').each(function() {
         if ($(this).find('button').text() === '18+') {
           $(this).find('button').prop('disabled', true);
@@ -174,10 +197,11 @@
       data.map(element => {
         const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
         const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
-        let adult = sessionStorage.getItem('year');
+        // let adult = sessionStorage.getItem('year');
+        // let adult = $('#adult-agree').val();
         let categoryName = element.category.name;
 
-        let adultResult = adult !== 'true' && categoryName === '18+';
+        let adultResult = globalAdult !== 'true' && categoryName === '18+';
    
         let topImg = false;
         if(element.top_at){
