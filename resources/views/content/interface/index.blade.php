@@ -66,6 +66,7 @@
         <div class="container-fluid fruite">
             <div class="container py-4">
                 <h1 class="mb-4">На Сайте Nver.am можно найти товар со 100%  кэшбеком.</h1>
+                <h5 class="mb-4">Для начало выберите товар из представленного ассортимента, и свяжитесь с продавцем для уточнения деталей получения кешбека.</h5>
 
                 <!-- Modal -->
                 <div class="modal fade" id="myModal" role="dialog">
@@ -170,7 +171,7 @@
                                     {{-- Start education video --}}
 
                                     <div class="col-lg-12">
-                                        <h4 class="mb-2">Ознакомительное материал</h4>
+                                        <h4 class="mb-2">Как это работает</h4>
                                         <video width="300" height="500" controls>
                                             <source
                                                 src="{{asset('assets/img/interface/video/education.mp4')}}"
