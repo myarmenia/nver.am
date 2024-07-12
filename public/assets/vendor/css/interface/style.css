@@ -664,8 +664,60 @@ input[type=range] {
     border-color:#8d0de7;
 }
 
+.yes-btn-modal {
+    background-color:#8d0de7;
+    color: white;
+}
+
+.no-btn-modal {
+    background-color:#eaea59;
+    color: white;
+
+}
+
+.logo {
+    width: 190px;
+}
+
+.video {
+    margin-bottom: 40px;
+}
+
+.input-group-append button {
+    padding: 1rem !important;
+    right: 5px;
+    bottom: 5px;
+    z-index: 3;
+}
+
 @media screen and (max-width: 767px) {
     .product-img {
         height: unset;
     }
+}
+
+@media screen and (max-width: 1200px) {
+    .logo {
+        width: 140px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .resp-video-orginal {
+        display: block;
+     }
+ 
+     .resp-video {
+         display: none;
+      }
+}
+
+@media screen and (max-width: 1400px) {
+    .resp-video-orginal {
+       display: none;
+    }
+
+    .resp-video {
+        display: block;
+     }
 }
