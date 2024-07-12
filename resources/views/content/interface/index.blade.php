@@ -67,20 +67,28 @@
             <div class="container py-4">
                 <h1 class="mb-4">На Сайте Nver.am можно найти товар со 100%  кэшбеком.</h1>
                 <h5 class="mb-4">Для начало выберите товар из представленного ассортимента, и свяжитесь с продавцем для уточнения деталей получения кешбека.</h5>
-
+                <div class="col-lg-12 col-md-12 resp-video">
+                    <h4 class="mb-2">Инфо блог</h4>
+                    <video style="height: 500px; width: 100%;" class="video" controls>
+                        <source
+                            src="{{asset('assets/img/interface/video/education.mp4')}}"
+                            type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
                 <!-- Modal -->
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
 
                         <!-- Modal content-->
                         <div class="modal-content">
-                            <div class="modal-body">
+                            <div class="modal-body text-center">
                                 <p>Вам 18 лет или более? </p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="year-btn-yes" class="btn btn-success"
+                                <button type="button" id="year-btn-yes" class="btn yes-btn-modal"
                                     data-dismiss="modal">Да</button>
-                                <button type="button" id="year-btn-no" class="btn btn-danger"
+                                <button type="button" id="year-btn-no" class="btn no-btn-modal"
                                     data-dismiss="modal">Нет</button>
                             </div>
                         </div>
@@ -96,9 +104,9 @@
                                 <p>В поиске товаров есть предметы, предназначенные для категории 18+. Вам есть 18 лет?</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="year-filter-btn-yes" class="btn btn-success"
+                                <button type="button" id="year-filter-btn-yes" class="btn yes-btn-modal"
                                     data-dismiss="modal">Да</button>
-                                <button type="button" id="year-filter-btn-no" class="btn btn-danger"
+                                <button type="button" id="year-filter-btn-no" class="btn no-btn-modal"
                                     data-dismiss="modal">Нет</button>
                             </div>
                         </div>
@@ -110,13 +118,23 @@
                     <div class="col-lg-12">
                         <div class="row g-4">
                             <div class="col-xl-3">
-                                <div class="input-group w-100 mx-auto d-flex">
-                                    <div class="d-flex search-input-interface">
+                                <div class="input-group mx-auto d-flex">
+                                    {{-- <div class="d-flex search-input-interface">
                                         <input type="text" id="title-search" class="form-control p-3" name="title"
                                             placeholder="поиск..." value="{{ request('title') }}">
                                         <button type="submit" id="title-search-submit" class="input-group-text p-3 "><i
                                                 class="fa fa-search"></i></button>
+                                    </div> --}}
+                                    <div class="input-group search-input-interface">
+                                        <input type="text" id="title-search" class="form-control p-3" name="title"
+                                            placeholder="поиск..." value="{{ request('title') }}">
+                                        <div class="input-group-append">
+                                            <button type="submit" id="title-search-submit">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="col-6"></div>
@@ -169,10 +187,9 @@
                                     </div>
                                             
                                     {{-- Start education video --}}
-
-                                    <div class="col-lg-12">
-                                        <h4 class="mb-2">Как это работает</h4>
-                                        <video width="300" height="500" controls>
+                                    <div class="col-lg-12 resp-video-orginal">
+                                        <h4 class="mb-2">Инфо блог</h4>
+                                        <video height="500" class="video" controls>
                                             <source
                                                 src="{{asset('assets/img/interface/video/education.mp4')}}"
                                                 type="video/mp4">
