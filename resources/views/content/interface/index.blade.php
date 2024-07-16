@@ -65,7 +65,7 @@
         <!-- Product Shop Start-->
         <div class="container-fluid fruite">
             <div class="container py-4">
-                <h1 class="mb-4">На Сайте Nver.am можно найти товар со 100%  кэшбеком.</h1>
+                <h1 class="mb-4">На сайте Nver.am можно найти товар со <span id="h1-click" style="cursor: pointer; text-decoration-line: underline;">100%  кэшбеком.</span></h1>
                 <h5 class="mb-4">Для начало выберите товар из представленного ассортимента, и свяжитесь с продавцем для уточнения деталей получения кешбека.</h5>
                 <div class="col-lg-12 col-md-12 resp-video">
                     <h4 class="mb-2">Инфо блог</h4>
