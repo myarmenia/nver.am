@@ -621,7 +621,13 @@ input[type=range] {
 /* End castum form range */
 
 .banner-img {
+    width: 100%;
     margin-top: 125px;
+}
+
+#h1-click {
+    cursor: pointer; 
+    text-decoration-line: underline;
 }
 
 .cashback-100-procent {
