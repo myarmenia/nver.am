@@ -144,5 +144,9 @@ Route::group(['prefix' => 'interface'], function () {
     Route::post('/get-products', [InterfaceController::class, 'getProducts'])->name('get-products');
 });
 
+Route::get('/not-found', function() {
+    return view('errors.404');
+});
+
 
 Route::get('get-file', [FileUploadService::class, 'get_file'])->name('get-file');
