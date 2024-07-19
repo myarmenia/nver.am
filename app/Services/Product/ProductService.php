@@ -34,46 +34,46 @@ class ProductService
             $results = $response->json()['result'];
 
             foreach ($results as $key => $result) {
-    //   dd($result);
+                //   dd($result);
                 $resultMessage = $result['message'];
-                if(isset($resultMessage['text']) || isset($resultMessage['caption'])){
+                if (isset($resultMessage['text']) || isset($resultMessage['caption'])) {
                     try {
                         $key = isset($resultMessage['text']) ? 'text' : 'caption';
 
                         //Start Gemini
                         $geminiSendedText = $this->setGemini($resultMessage[$key]);
                         $start = strpos($geminiSendedText, '{');
-                        $end = strpos($geminiSendedText, '}')+1;
+                        $end = strpos($geminiSendedText, '}') + 1;
                         $readyText = null;
 
                         if ($start !== false && $end !== false) {
-                            $found_text = substr($geminiSendedText, $start, $end - $start );
+                            $found_text = substr($geminiSendedText, $start, $end - $start);
                             $tmp = json_decode($found_text, true);
-    
-                            if(
+
+                            if (
                                 !array_key_exists('title', $tmp) ||
                                 !array_key_exists('price_in_store', $tmp) ||
                                 !array_key_exists('owner', $tmp) ||
-                                !array_key_exists('cashback', $tmp) 
-                            ){
+                                !array_key_exists('cashback', $tmp)
+                            ) {
                                 continue;
                             }
 
                             $tmp['owner'] = str_replace('@', '', $tmp['owner']);
                             $tmp['title_am'] = GoogleTranslate::trans($tmp['title'], 'hy', 'ru');
                             $tmp['price_in_store'] = (int) str_replace(' ', '', $tmp['price_in_store']);
-    
-                            if(!str_contains($tmp['cashback'], '%')){
+
+                            if (!str_contains($tmp['cashback'], '%')) {
                                 $tmp['cashback'] = round(((int) $tmp['cashback'] * 100) / (int) $tmp['price_in_store']);
-                            }else{
+                            } else {
                                 $tmp['cashback'] = (int) $tmp['cashback'];
                             }
-                          
+
                             $readyText = json_encode($tmp, JSON_UNESCAPED_UNICODE);
-                        } else{
+                        } else {
                             continue;
                         }
-    
+
                         $product = Product::create([
                             'text' => json_encode($resultMessage[$key], JSON_UNESCAPED_UNICODE),
                             'update_id' => $result['update_id'],
@@ -85,12 +85,12 @@ class ProductService
                     } catch (\Throwable $th) {
                         continue;
                     }
-                    
-                }else{
+
+                } else {
                     $product = Product::where('media_group_id', $resultMessage['media_group_id'])->first();
                 }
-                
-                if(!$product){
+
+                if (!$product) {
                     continue;
                 }
 
@@ -108,7 +108,7 @@ class ProductService
                     }
                 }
 
-                if(isset($resultMessage['video'])){
+                if (isset($resultMessage['video'])) {
                     $response = Telegraph::getFileInfo($resultMessage['video']['file_id'])->send();
                     $filePath = $response->json()['result']['file_path'];
 
@@ -122,7 +122,7 @@ class ProductService
                 }
             }
             DB::commit();
-                return true;
+            return true;
         } catch (\Exception $e) {
             info("Exception", [$e->getMessage()]);
             DB::rollBack();
@@ -143,7 +143,7 @@ class ProductService
         unset($data['category_id']);
         $data['title_am'] = $decodedDetail['title_am'] ?? '';
         $product->product_details = json_encode($data, JSON_UNESCAPED_UNICODE);
-        if(array_key_exists('top', $data)){
+        if (array_key_exists('top', $data)) {
             $product->top_at = Carbon::now();
         }
 
@@ -152,7 +152,7 @@ class ProductService
         } else {
             session(['success' => 'Продукт не был модифицирован.']);
         }
-        
+
         return true;
     }
 
