@@ -142,6 +142,8 @@ Route::group(['prefix' => 'interface'], function () {
     Route::get('/shop-details/{id}', [InterfaceController::class, 'detail'])->name('get-details');
     Route::post('/search-filter', [InterfaceController::class, 'filterSearch'])->name('search-title');
     Route::post('/get-products', [InterfaceController::class, 'getProducts'])->name('get-products');
+    Route::post('/add-product', [InterfaceController::class, 'addProducts']);
+    Route::get('/get-all-categories', [CategoryController::class, 'getAllCategories']);
 });
 
 Route::get('/not-found', function() {

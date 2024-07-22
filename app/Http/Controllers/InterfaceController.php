@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\Interface\InterfaceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InterfaceController extends Controller
 {
+
+    private $interfaceService;
+
+    public function __construct(InterfaceService $interfaceService)
+    {
+        $this->interfaceService = $interfaceService;
+    }
     public function index()
     {
         $products = Product::with('images', 'category')->whereNotNull('category_id')->orderBy('id', 'desc')->get();
@@ -150,6 +158,12 @@ class InterfaceController extends Controller
             }
         }
         return response()->json(['data' => $products, 'adult' => $checkAdult]);
+    }
+
+    public function addProducts(Request $request)
+    {
+        $creteProduct = $this->interfaceService->addProducts($request->all());
+        dd($creteProduct);
     }
 
 }

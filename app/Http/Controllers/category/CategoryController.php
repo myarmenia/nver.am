@@ -41,4 +41,11 @@ class CategoryController extends Controller
        return redirect()->back();
     }
 
+    public function getAllCategories()
+    {
+        $data = Category::all();
+
+        return response()->json(['data' => $data]);
+    }
+
 }
