@@ -19,7 +19,7 @@ class InterfaceController extends Controller
     }
     public function index()
     {
-        $products = Product::with('images', 'category')->whereNotNull('category_id')->orderBy('id', 'desc')->get();
+        $products = Product::with('images', 'category')->where('active', '1')->orderBy('id', 'desc')->get();
 
         $categories = Category::all();
 
@@ -89,7 +89,7 @@ class InterfaceController extends Controller
         }
 
         $products = $query->with('images', 'category', 'videos')
-            ->whereNotNull('category_id')
+            ->where('active', '1')
             ->orderByRaw("
                 CASE 
                     WHEN top_at IS NOT NULL AND top_at >= ? THEN 0 
@@ -133,7 +133,7 @@ class InterfaceController extends Controller
             'videos',
             'category'
         ])
-            ->whereNotNull('category_id');
+            ->where('active', '1');
 
         if ($adult !== "true") {
             $product->where('category_id', '!=', $adultId);
@@ -163,6 +163,9 @@ class InterfaceController extends Controller
     public function addProducts(Request $request)
     {
         $creteProduct = $this->interfaceService->addProducts($request->all());
+        if($creteProduct['success']){
+            return response()->json(['success' => true, 'payment_id' => $creteProduct['payment_id']]);
+        }
         dd($creteProduct);
     }
 

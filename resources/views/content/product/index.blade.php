@@ -84,7 +84,7 @@
                                                         <select id="defaultSelect" class="form-select" name="category_id">
                                                             <option value="">Выбирать</option>
                                                             @foreach ($categories as $category)
-                                                                <option value="{{ $category->id }}">{{ $category->name }}
+                                                                <option value="{{ $category->id }}"  {{ $category->id ==  $product->category_id ? 'selected' : '' }}>{{ $category->name }}
                                                                 </option>
                                                             @endforeach
                                                         </select>

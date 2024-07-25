@@ -24,3 +24,8 @@ function replaceCyrillicWithLatin($text)
   ];
   return strtr($text, $map);
 }
+
+function getUniquePaymentId()
+{
+  return  time() . mt_rand(1000, 9999);
+}

@@ -9,20 +9,25 @@
                 {{-- <h1 class="text-primary display-6">Fruitables</h1> --}}
                 <img src="{{ asset('assets/img/interface/logo.png') }}" alt="logo" class="logo">
             </a>
-            <div class="d-flex m-3 me-0">
-                <button type="submit" id="add-product">Add product</button>
+            <div class="d-flex add-product-head-main align-items-center">
+                <img src="{{ asset('assets/img/interface/header-add-product.png') }}" alt="logo" class="header-add-producut-pic">
+                <span class="head-add-product-txt">Вы продавец? у вас нет активных продаж и отзывов? Подключите кэшбэк, за отзывы!</span>
+                <button type="submit" class="btn btn-warning" id="add-product">Добавить товар</button>
             </div>
+            {{-- <div class="d-flex m-3 me-0">
+            </div> --}}
         </nav>
     </div>
 </div>
 <!-- Navbar End -->
+
 
 <!-- Add product modal -->
 <div class="modal fade" id="add-product-modal" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content" id="header-modal-content">
             <div class="modal-header">
                 <p>Добавление товара.</p>
             </div>

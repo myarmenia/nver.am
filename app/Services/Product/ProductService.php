@@ -77,6 +77,7 @@ class ProductService
                         $product = Product::create([
                             'text' => json_encode($resultMessage[$key], JSON_UNESCAPED_UNICODE),
                             'update_id' => $result['update_id'],
+                            'type' => Product::TYPE_TELEGRAM,
                             'media_group_id' => isset($resultMessage['media_group_id']) ? $resultMessage['media_group_id'] : null,
                             'product_details' => $readyText
                         ]);
@@ -143,6 +144,10 @@ class ProductService
         unset($data['category_id']);
         $data['title_am'] = $decodedDetail['title_am'] ?? '';
         $product->product_details = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $product->active = 1;
+        if($product->type == Product::TYPE_CUSTOM){
+            $product->type = Product::TYPE_ADDED;
+        }
         if (array_key_exists('top', $data)) {
             $product->top_at = Carbon::now();
         }
