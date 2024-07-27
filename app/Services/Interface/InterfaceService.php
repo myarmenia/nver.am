@@ -3,6 +3,7 @@ namespace App\Services\Interface;
 
 use App\Mail\SendUserProductId;
 use App\Models\Product;
+use App\Models\TmpProduct;
 use Illuminate\Support\Facades\Mail;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Support\Facades\DB;
@@ -49,13 +50,20 @@ class InterfaceService
                 return ['success' => true, 'payment_id' => $product->payment_id];
 
             } elseif ($data['type'] == 'add-from-suppot') {
+                $data['payment_id'] = getUniquePaymentId();
+                $tmpProduct = TmpProduct::create($data);
 
-            } else {
-                return false;
+               if($tmpProduct) {
+                   Mail::send(new SendUserProductId($tmpProduct->payment_id, $data['owner_email']));
+                   DB::commit();
+                  return ['success' => true, 'payment_id' => $tmpProduct->payment_id];
+               }else {
+                 return ['success' => false];
+               }
             }
-
-            DB::commit();
-            return true;
+            
+            DB::rollBack();
+            return ['success' => false];
         } catch (\Exception $e) {
             info("Exception", [$e->getMessage()]);
             DB::rollBack();

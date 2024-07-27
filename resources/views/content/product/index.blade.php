@@ -47,6 +47,15 @@
                                             {{ json_decode($product->text, true) }}
                                             </pre>
                                         </div>
+                                        @if($product->type == App\Models\Product::TYPE_CUSTOM)
+                                        <div class="card-body " >ID: <strong>{{$product->payment_id}}
+                                        </div>
+                                        @endif
+                                        @if($product->type == App\Models\Product::TYPE_CUSTOM)
+                                        <div class="card-body " >
+                                          <h3 class="text-danger"> Тип добавления: <strong>{{$product->type}}</strong></h3>
+                                        </div>
+                                        @endif
                                         <form method="POST" action="{{ route('edit-product', ['id' => $product->id]) }}">
                                             <div class="">
                                                 <div class="m-1 row">

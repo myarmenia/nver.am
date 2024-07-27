@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddCustomProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Interface\InterfaceService;
@@ -160,13 +161,15 @@ class InterfaceController extends Controller
         return response()->json(['data' => $products, 'adult' => $checkAdult]);
     }
 
-    public function addProducts(Request $request)
+    public function addProducts(AddCustomProductRequest $request)
     {
         $creteProduct = $this->interfaceService->addProducts($request->all());
         if($creteProduct['success']){
             return response()->json(['success' => true, 'payment_id' => $creteProduct['payment_id']]);
         }
-        dd($creteProduct);
+
+        return response()->json(['success' => false, 'message' => 'Что то пошло не так']);
+
     }
 
 }

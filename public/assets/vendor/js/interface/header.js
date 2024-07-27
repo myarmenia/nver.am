@@ -161,38 +161,38 @@ $(function () {
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="firstName" class="form-label">Название товара</label>
-                        <input class="form-control" type="text" name="title" autofocus required />
+                        <input class="form-control" type="text" name="title" autofocus  />
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Цена на площадке (руб.)</label>
-                        <input class="form-control" type="number" name="price_in_store" required />
+                        <input class="form-control" type="number" name="price_in_store"  />
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="firstName" class="form-label">Кешбек(%)</label>
-                        <input class="form-control" type="number" name="cashback" autofocus required />
+                        <input class="form-control" type="number" name="cashback" autofocus  />
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Телеграм(@)</label>
-                        <input class="form-control" type="text" name="owner" required />
+                        <input class="form-control" type="text" name="owner"  />
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="language" class="form-label">Категория</label>
-                        <select id="language" class="select2 form-select" name="category_id" required>
+                        <select id="language" class="select2 form-select" name="category_id" >
                             ${options}
                         </select>
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Электронная почта</label>
-                        <input class="form-control" type="text" name="owner_email" required />
+                        <input class="form-control" type="text" name="owner_email"  />
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="formFileMultiple" class="form-label">Фотографии</label>
-                    <input class="form-control" type="file" name="photos[]" id="formFileMultiple" multiple required>
+                    <input class="form-control" type="file" name="photos[]" id="formFileMultiple" accept="image/*" multiple >
                 </div>
                 <div class="mt-2">
                     <button type="submit" class="btn btn-outline-secondary me-2">Отправить</button>
@@ -211,23 +211,23 @@ $(function () {
                 <div class="row">
                     <div class="mb-3">
                         <label class="form-label">Ссылка на товар</label>
-                        <input class="form-control" type="text" name="link" autofocus required />
+                        <input class="form-control" type="text" name="link" autofocus  />
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Кешбек(%)</label>
-                        <input class="form-control" type="number" name="cashback" autofocus required />
+                        <input class="form-control" type="number" name="cashback" autofocus  />
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">Телеграм(@)</label>
-                        <input class="form-control" type="text" name="owner_email" required />
+                        <input class="form-control" type="text" name="owner"  />
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3">
                         <label class="form-label">Электронная почта</label>
-                        <input class="form-control" type="text" name="email" required />
+                        <input class="form-control" type="text" name="owner_email"  />
                     </div>
                 </div>
                 <div class="mt-2">
@@ -274,13 +274,27 @@ $(function () {
                     $('#header-modal-content').html(successMessage);
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-                // Обработка ошибки
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    displayValidationErrors(errors);
+                }
             }
         });
     });
 
+    function displayValidationErrors(errors) {
+        $('.header-error-message').remove(); 
+        let showError = '';
+        for (const [key, value] of Object.entries(errors)) {
+            console.log(`${key}: ${value}`);
+            showError += `<p class="header-error-message" style="color: red; margin: 0">${value}</p>`;
+          }
+
+          $('#add-content').append(showError);
+       
+    }
+    
     $(document).on('click', '#refreshButton', function() {
         location.reload();
     });

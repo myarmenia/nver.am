@@ -3,6 +3,7 @@
 use App\Http\Controllers\category\CategoryController;
 use App\Http\Controllers\InterfaceController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\TmpProduct\TmpProductController;
 use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dashboard\Analytics;
@@ -112,7 +113,7 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
-//TELEGRAM WEBEX BOT
+//TELEGRAM WEBEX BOT---------------------------------------------------------------
 
 //auth
 Route::get('/admin', [LoginBasic::class, 'index'])->name('login');
@@ -129,6 +130,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/edit-product/{id}', [ProductController::class, 'editProduct'])->name('edit-product');
         Route::get('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('delete-product');
     });
+
+    Route::group(['prefix' => 'tmp-product'], function () {
+        Route::get('/', [TmpProductController::class, 'index'])->name('get-tmp-products');
+        Route::get('/delete-tmp-product/{id}', [TmpProductController::class, 'destroy'])->name('delete-tmp-product');
+    });
+
+
 
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('get-categories');
