@@ -66,7 +66,7 @@ $(function () {
                     <input class="form-control" type="file" name="photos[]" id="formFileMultiple" accept="image/*" multiple >
                 </div>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-outline-secondary me-2">Отправить</button>
+                    <button type="submit" id="submitForm" class="btn btn-outline-secondary me-2">Отправить</button>
                     <button type="reset" class="btn btn-outline-secondary" id="cancelButton">Отмена</button>
                 </div>
             </form>`;
@@ -102,7 +102,7 @@ $(function () {
                     </div>
                 </div>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-outline-secondary me-2">Отправить</button>
+                    <button type="submit" id="submitForm" class="btn btn-outline-secondary me-2">Отправить</button>
                     <button type="reset" class="btn btn-outline-secondary" id="cancelButton">Отмена</button>
                 </div>
             </form>`;
@@ -118,7 +118,8 @@ $(function () {
         if (formData.get('type') === 'add-yourself' && !formData.has('photos')) {
             formData.append('photos', []);
         }
-
+        $('#spinner').addClass('show')
+        $('#submitForm').prop('disabled', true).text('Отправляется...');
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
@@ -126,6 +127,7 @@ $(function () {
             processData: false,
             contentType: false,
             success: function(response) {
+                $('#spinner').removeClass('show')
                 if(response.success) {
                     let successMessage = `
                      <div class="modal-answer-content">
@@ -150,6 +152,8 @@ $(function () {
                 }
             },
             error: function(xhr) {
+                $('#spinner').removeClass('show')
+                $('#submitForm').prop('disabled', false).text('Отправить');
                 if (xhr.status === 422) {
                     let errors = xhr.responseJSON.errors;
                     displayValidationErrors(errors);

@@ -31,6 +31,10 @@
 #spiner div {
     color: red !important;
 }
+
+#spinner {
+    background-color: #beb6c129 !important;
+}
 /*** Spinner End ***/
 
 

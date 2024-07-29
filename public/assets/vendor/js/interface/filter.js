@@ -4,7 +4,8 @@
     // let adult = sessionStorage.getItem('year');
     var globalAdult = null;
     let adult = $('#adult-agree').val();
-
+    //add spiner
+    $('#spinner').addClass('show')
     $.ajax({
       type: "POST",
       url: '/interface/get-products?page=1',
@@ -13,7 +14,11 @@
         adult: adult,
       },
       success: function (data) {
+        $('#spinner').removeClass('show')
         addProducts(data.data)
+      },
+      error: function(xhr) {
+        $('#spinner').removeClass('show')
       }
     });
 
@@ -21,12 +26,8 @@
     // Filter
 
     function filter(data) {
-      // let adult = sessionStorage.getItem('year');
-      // console.log($('#adult-agree').val() || null, 777777)
-      // console.log($('#adult-agree').val(), 1111)
-      // let adult = $('#adult-agree').val() || null;
-      // console.log(adult, 777777)
-      console.log(globalAdult, "globalAdultglobalAdult")
+      $('#spinner').addClass('show')
+
       $.ajax({
         type: "POST",
         url: '/interface/search-filter',
@@ -36,21 +37,12 @@
         },
         cache: false,
         success: function (data) { 
+          $('#spinner').removeClass('show')
           addProducts(data.data)        
         }
       });
     }
   
-    //add button submit
-    // $('#title-search-submit').on('click', function(){
-    //   let textInput = $('#title-search').val();
-    //   $('#select-submit').val('');
-    //   $('#procent-submit').val(0);
-    //   $('#procent').text(0);
-    //   $('.category-button').removeClass('active');
-    //   filter({'title': textInput})
-    // });
-
     $('#title-search-submit').on('click', function() {
       executeSearch();
     });
