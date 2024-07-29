@@ -244,6 +244,10 @@ $(function () {
 
         var formData = new FormData(this);
 
+        if (formData.get('type') === 'add-yourself' && !formData.has('photos')) {
+            formData.append('photos', []);
+        }
+
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),

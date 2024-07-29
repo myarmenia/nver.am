@@ -26,7 +26,7 @@ class AddCustomProductRequest extends FormRequest
             'owner' => 'required',
             'owner_email' => 'required|email',
         ];
-    
+
         if (request()->type == 'add-from-suppot') {
             $specificRules = [
                 'link' => 'required',
@@ -36,6 +36,7 @@ class AddCustomProductRequest extends FormRequest
                 'title' => 'required',
                 'price_in_store' => 'required',
                 'category_id' => 'required',
+                'photos' => 'required',
                 'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ];
         }
