@@ -17,3 +17,14 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('add:button', function () {
+    $bot = \DefStudio\Telegraph\Models\TelegraphBot::find(2);
+
+    dd($bot->registerCommands([
+        'start' => 'Starting add product',
+        'action' => 'action',
+        'help' => 'bot commands',
+    ])->send());
+
+});

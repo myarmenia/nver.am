@@ -621,7 +621,13 @@ input[type=range] {
 /* End castum form range */
 
 .banner-img {
+    width: 100%;
     margin-top: 125px;
+}
+
+#h1-click {
+    cursor: pointer; 
+    text-decoration-line: underline;
 }
 
 .cashback-100-procent {
@@ -690,6 +696,49 @@ input[type=range] {
     z-index: 3;
 }
 
+.btn-outline-secondary:hover {
+    background-color: inherit !important;
+    color: #8d0de7 !important;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 .25rem #c1a3fd !important;
+}
+
+.add-product-head-main span {
+    width: 450px;
+}
+
+.add-product-head-main button {
+    color: white;
+    height: 45px;
+    border-radius: 20px;
+}
+
+.modal-answer-content {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.payment-info {
+    border: 2px solid #D39E00;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+.payment-info span {
+    color: #D39E00;
+}
+.btn-orange {
+    background-color: #FFA500;
+    border-color: #FFA500;
+    color: #fff;
+}
+
+
 @media screen and (max-width: 767px) {
     .product-img {
         height: unset;
@@ -699,6 +748,15 @@ input[type=range] {
 @media screen and (max-width: 1200px) {
     .logo {
         width: 140px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .add-product-head-main img {
+        display: none;
+    }
+    .add-product-head-main span {
+        display: none;
     }
 }
 

@@ -54,7 +54,7 @@ return [
          * If enabled, Telegraph dumps received
          * webhook messages to logs
          */
-        'debug' => false,
+        'debug' => env('APP_DEBUG'),
     ],
 
     /*

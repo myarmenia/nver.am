@@ -18,7 +18,11 @@ class Product extends Model
         'update_id', 
         'media_group_id', 
         'product_details',
-        'top_at'
+        'top_at',
+        'active',
+        'type',
+        'payment_id',
+        'owner_email'
     ];
 
     protected $casts = [
@@ -52,6 +56,12 @@ class Product extends Model
         ];
 
     }
+
+    //add create types
+
+    const TYPE_TELEGRAM = 'telegram';
+    const TYPE_CUSTOM = 'custom';
+    const TYPE_ADDED = 'added';
 
 
 }

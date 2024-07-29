@@ -20,7 +20,8 @@ class GenerateSitemap extends Command
     {
         $sitemap = Sitemap::create()
             ->add(Url::create('/')->setPriority(1.0)->setChangeFrequency('daily')->setLastModificationDate(now()))
-            ->add(Url::create('/about')->setPriority(0.8)->setChangeFrequency('monthly')->setLastModificationDate(now()));
+            ->add(Url::create('/about')->setPriority(0.8)->setChangeFrequency('monthly')->setLastModificationDate(now()))
+            ->add(Url::create('/not-found')->setPriority(0.8)->setChangeFrequency('monthly')->setLastModificationDate(now()));
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
 

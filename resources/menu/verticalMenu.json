@@ -24,6 +24,12 @@
       "slug": "product"
     },
     {
+      "url": "/tmp-product",
+      "name": "TmpProduct",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "slug": "tmp-product"
+    },
+    {
       "url": "/categories",
       "name": "Category",
       "icon": "menu-icon tf-icons bx bx-home-circle",
