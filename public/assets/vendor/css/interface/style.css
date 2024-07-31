@@ -33,7 +33,7 @@
 }
 
 #spinner {
-    background-color: #beb6c129 !important;
+    background-color: #6f188fbd !important;
 }
 /*** Spinner End ***/
 
@@ -740,6 +740,13 @@ input[type=range] {
     background-color: #FFA500;
     border-color: #FFA500;
     color: #fff;
+}
+
+.spin-style {
+    width: 60px;
+    z-index: 11;
+    color: #8d0de7;
+    height: 60px;
 }
 
 

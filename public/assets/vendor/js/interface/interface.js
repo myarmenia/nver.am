@@ -1,46 +1,114 @@
+// const { data } = require("jquery");
+
   $(function () {
 
     //get begin product
     // let adult = sessionStorage.getItem('year');
     var globalAdult = null;
     let adult = $('#adult-agree').val();
-    //add spiner
-    $('#spinner').addClass('show')
-    $.ajax({
-      type: "POST",
-      url: '/interface/get-products?page=1',
-      cache: false,
-      data: {
-        adult: adult,
-      },
-      success: function (data) {
-        $('#spinner').removeClass('show')
-        addProducts(data.data)
-      },
-      error: function(xhr) {
-        $('#spinner').removeClass('show')
+    var page = 1;
+    var isLoading = false;
+    var html = '';
+    var thisPage = 1;
+    var lastPage = 1;
+    var filteredInfo = null;
+
+    function loadMoreData(page) {
+      $('#spinner').addClass('show');
+      isLoading = true;
+  
+      $.ajax({
+        type: "POST",
+        url: `/interface/get-products?page=${page}`,
+        cache: false,
+        data: {
+          adult: $('#adult-agree').val(),
+          data: filteredInfo,
+        },
+        success: function (data) {
+          $('#spinner').removeClass('show');
+          lastPage = data.data.last_page;
+          thisPage = data.data.current_page;
+          addProducts(data.data);
+          isLoading = false;
+        },
+        error: function (xhr) {
+          $('#spinner').removeClass('show');
+          isLoading = false;
+        }
+      });
+    }
+
+    $(window).scroll(function () {
+      if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100 && !isLoading) {
+        console.log(thisPage, lastPage);
+        if(thisPage !== lastPage) {
+          page++;
+          loadMoreData(page);
+        }
       }
     });
+    loadMoreData(page);
 
+    //add spiner
+    // $('#spinner').addClass('show')
+    // $.ajax({
+    //   type: "POST",
+    //   url: `/interface/get-products?page=${page}`,
+    //   cache: false,
+    //   data: {
+    //     adult: adult,
+    //   },
+    //   success: function (data) {
+    //     $('#spinner').removeClass('show')
+    //     addProducts(data.data)
+    //   },
+    //   error: function(xhr) {
+    //     $('#spinner').removeClass('show')
+    //   }
+    // });
+
+    // function loadMoreData(page) {
+    //   $('#spinner').addClass('show')
+    //   $.ajax({
+    //     type: "POST",
+    //     url: `/interface/get-products?page=${page}`,
+    //     cache: false,
+    //     data: {
+    //       adult: adult,
+    //     },
+    //     success: function (data) {
+    //       $('#spinner').removeClass('show')
+    //       addProducts(data.data)
+    //     },
+    //     error: function(xhr) {
+    //       $('#spinner').removeClass('show')
+    //     }
+    //   });
+    // }
 
     // Filter
 
     function filter(data) {
-      $('#spinner').addClass('show')
+      // $('#spinner').addClass('show')
+      filteredInfo = data;
+      html = '';
+      page = 1;
+      loadMoreData(page)
 
-      $.ajax({
-        type: "POST",
-        url: '/interface/search-filter',
-        data: {
-          adult: globalAdult,
-          data: data,
-        },
-        cache: false,
-        success: function (data) { 
-          $('#spinner').removeClass('show')
-          addProducts(data.data)        
-        }
-      });
+      // $.ajax({
+      //   type: "POST",
+      //   url: '/interface/search-filter',
+      //   data: {
+      //     adult: globalAdult,
+      //     data: data,
+      //   },
+      //   cache: false,
+      //   success: function (data) { 
+      //     $('#spinner').removeClass('show')
+      //     addProducts(data.data)        
+      //   }
+      // });
     }
   
     $('#title-search-submit').on('click', function() {
@@ -204,11 +272,11 @@
 
   function addProducts(data)
   {
-    let html = '';
+    // let html = '';
     let currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 10);
 
-    data.map(element => {
+    data.data.map(element => {
       const fileUrl = element.videos.length ? element.videos[0].path : element.images[0].path;
       const productDetails = element.product_details ? JSON.parse(element.product_details) : {};
       // let adult = sessionStorage.getItem('year');
