@@ -19,7 +19,7 @@
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
     <script src="{{ asset('assets/vendor/js/interface/main.js') }}"></script>
-    <script src="{{ asset('assets/vendor/js/interface/filter.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/interface/interface.js') }}"></script>
 
 @endsection
 
@@ -28,10 +28,19 @@
     <body>
 
         <!-- Spinner Start -->
-        <div id="spinner"
-            class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+        {{-- <div class="spinner-grow text-info" role="status"></div> --}}
+
+        {{-- <div id="spinner"
+            class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-info" role="status"></div>
-        </div>
+        </div> --}}
+        <div id="spinner" class="col-md w-100 h-100">
+            <div class="demo-inline-spacing">
+              <div class="spin-style spinner-border spinner-border-lg top-50 start-50 position-fixed d-flex align-items-center justify-content-center" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
         <!-- Spinner End -->
         @include('content/interface/include/header')
 
